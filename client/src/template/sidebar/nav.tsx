@@ -1,5 +1,3 @@
-import React from "react";
-
 /** Component for NavigationSideBar Item: param(value: value of list; isActivate: is page active?) **/
 function Item({ value, isActivate }: { value: string; isActivate: boolean }) {
   function handleOnClick() {
