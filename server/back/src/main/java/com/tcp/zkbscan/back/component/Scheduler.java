@@ -1,8 +1,11 @@
 package com.tcp.zkbscan.back.component;
 
 import com.tcp.zkbscan.back.dto.zkbnb.BlockResponse;
+import com.tcp.zkbscan.back.dto.zkbnb.CurrentHeightResponse;
 import com.tcp.zkbscan.back.entity.L1Block;
+import com.tcp.zkbscan.back.entity.L2Block;
 import com.tcp.zkbscan.back.service.L1BlockService;
+import com.tcp.zkbscan.back.service.L2BlockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +29,7 @@ public class Scheduler {
 
     private final Web3j bscL1Rpc;
     private final L1BlockService l1BlockService;
+    private final L2BlockService l2BlockService;
     private final RestTemplate restTemplate;
 
     @Value("${bsc.l1.contract.block}")
@@ -97,14 +101,52 @@ public class Scheduler {
 
     @Scheduled(fixedDelay = 1000)
     public void fetchL2NewBlock() {
-        BigInteger offset = BigInteger.ZERO;
+        L2Block l2DBLatestBlock = l2BlockService.getLatestBlock();
 
-        ResponseEntity<BlockResponse> response = restTemplate
-                .exchange(bscL2RpcUrl + "/api/v1/blocks?offset=0&limit=100",
+        BigInteger startBlockHeight = BigInteger.ZERO;
+        if(l2DBLatestBlock != null)
+            startBlockHeight = startBlockHeight.max(l2DBLatestBlock.getHeight().add(BigInteger.ONE));
+
+        ResponseEntity<CurrentHeightResponse> currentHeightResponse = restTemplate
+                .exchange(String.format("%s/api/v1/currentHeight", bscL2RpcUrl),
                         HttpMethod.GET,
                         null,
-                        BlockResponse.class);
+                        CurrentHeightResponse.class);
 
-        log.info(response.getBody().toString());
+        BigInteger endBlockHeight = currentHeightResponse.getBody().getHeight();
+
+        if(startBlockHeight.compareTo(endBlockHeight) < 0) {
+            log.info("[L2] Block Replaying From : {}, To : {}", startBlockHeight, endBlockHeight);
+
+            BigInteger targetBlockNumber = startBlockHeight;
+            while(targetBlockNumber.compareTo(endBlockHeight) != 0) {
+                ResponseEntity<BlockResponse> blockResponse = restTemplate
+                        .exchange(String.format("%s/api/v1/block?by=height&value=%d", bscL2RpcUrl, targetBlockNumber),
+                                HttpMethod.GET,
+                                null,
+                                BlockResponse.class);
+
+                BlockResponse targetBlock = blockResponse.getBody();
+
+                L2Block l2Block = L2Block.builder()
+                        .height(targetBlock.getHeight())
+                        .commitment(targetBlock.getCommitment())
+                        .stateRoot(targetBlock.getState_root())
+                        .priorityOperations(targetBlock.getPriority_operations())
+                        .pendingOnChainOperationsHash(targetBlock.getPending_on_chain_operations_hash())
+                        .pendingOnChainOperationsPubData(targetBlock.getPending_on_chain_operations_pub_data())
+                        .committedTxHash(targetBlock.getCommitted_tx_hash())
+                        .committedAt(targetBlock.getCommitted_at())
+                        .verifiedTxHash(targetBlock.getVerified_tx_hash())
+                        .verifiedAt(targetBlock.getVerified_at())
+                        .status(targetBlock.getStatus())
+                        .build();
+
+                l2BlockService.saveBlock(l2Block);
+                log.info("[L2] Block Saved : {}", targetBlock.getHeight());
+
+                targetBlockNumber = targetBlockNumber.add(BigInteger.ONE);
+            }
+        }
     }
 }
