@@ -61,7 +61,7 @@ public class Scheduler {
             log.info("[L1] Block Replaying From : {}, To : {}", startBlockNumber, endBlockNumber);
 
             BigInteger targetBlockNumber = startBlockNumber;
-            while(targetBlockNumber.compareTo(endBlockNumber) != 0) {
+            while(targetBlockNumber.compareTo(endBlockNumber.add(BigInteger.ONE)) != 0) {
                 try {
                     EthBlock.Block newBlock = bscL1Rpc.ethGetBlockByNumber(DefaultBlockParameter.valueOf(targetBlockNumber), false)
                             .send()
@@ -119,7 +119,7 @@ public class Scheduler {
             log.info("[L2] Block Replaying From : {}, To : {}", startBlockHeight, endBlockHeight);
 
             BigInteger targetBlockNumber = startBlockHeight;
-            while(targetBlockNumber.compareTo(endBlockHeight) != 0) {
+            while(targetBlockNumber.compareTo(endBlockHeight.add(BigInteger.ONE)) != 0) {
                 ResponseEntity<BlockResponse> blockResponse = restTemplate
                         .exchange(String.format("%s/api/v1/block?by=height&value=%d", bscL2RpcUrl, targetBlockNumber),
                                 HttpMethod.GET,
