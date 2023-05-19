@@ -1,0 +1,9 @@
+{
+    "icon" : "icon_test",
+    "blocknumber" : "blocknumber_test",
+    "transhash" : 333333,
+    "walletsend" : "LeeHyeongJin",
+    "walletreceive" : "KimYoungJin",
+    "timestamp" : "timestamp_test",
+    "currency" : "currency_test"
+}
