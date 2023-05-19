@@ -29,7 +29,7 @@ public class L1Transaction {
 
     private BigInteger gasPrice;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String input;
 
     private BigInteger nonce;
