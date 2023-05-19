@@ -10,6 +10,7 @@ import Home from "./template/pages/home";
 import L1L2Trans from "./template/pages/l1l2trans";
 import L1TB from "./template/pages/l1tb";
 import L2L1Trans from "./template/pages/l2l1trans";
+import L2T from "./template/pages/l2t";
 import L2TB from "./template/pages/l2tb";
 import Trans from "./template/pages/trans";
 import VL1SB from "./template/pages/vl1sb";
@@ -26,6 +27,7 @@ function App() {
     { name: "Contract internal transactions", key: "cit", element: <Cit /> },
     { name: "L1 Transactions batches", key: "l1tb", element: <L1TB /> },
     { name: "View L1 state batches", key: "vl1sb", element: <VL1SB /> },
+    { name: "L2 Transactions", key: "l2t", element: <L2T /> },
     { name: "L2 Transactions batches", key: "l2tb", element: <L2TB /> },
     { name: "View L2 state batches", key: "vl2sb", element: <VL2SB /> },
     { name: "ERC 20 top tokens", key: "e21tt", element: <E21TT /> },
