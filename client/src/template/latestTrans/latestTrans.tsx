@@ -1,21 +1,23 @@
 import styles from "./priceBox.module.css";
 
 type ComponentProps = {
-  logo: string;
-  counter: number;
-  tps: string;
+  data: {
+    logo: string;
+    counter: number;
+    tps: string;
+  };
 };
 
-function latestTrans({ logo, counter, tps }: ComponentProps) {
+function latestTrans({ data }: ComponentProps) {
   return (
     <div>
       <div className={styles.wrap}>
-        <img src={logo} alt="Logo" />
+        <img src={data.logo} alt="Logo" />
       </div>
       <div>LATEST TRANSACTION INDEX</div>
       <div>
-        <div>{counter}</div>
-        <div>{tps}</div>
+        <div>{data.counter}</div>
+        <div>{data.tps}</div>
       </div>
     </div>
   );

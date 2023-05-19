@@ -1,24 +1,26 @@
 import styles from "./priceBox.module.css";
 
 type ComponentProps = {
-  logo: string;
-  title: string;
-  price: number;
-  altprice: number;
-  flucrate: number;
+  data: {
+    logo: string;
+    title: string;
+    price: number;
+    altprice: number;
+    flucrate: number;
+  };
 };
 
-function priceBox({ logo, title, price, altprice, flucrate }: ComponentProps) {
+function priceBox({ data }: ComponentProps) {
   return (
     <div>
       <div className={styles.wrap}>
-        <img src={logo} alt="Logo" />
+        <img src={data.logo} alt="Logo" />
       </div>
-      <div>{title} PRICE</div>
+      <div>{data.title} PRICE</div>
       <div>
-        <div>{price}</div>
-        <div>{altprice}</div>
-        <div>{flucrate}</div>
+        <div>{data.price}</div>
+        <div>{data.altprice}</div>
+        <div>{data.flucrate}</div>
       </div>
     </div>
   );

@@ -1,32 +1,28 @@
 import styles from "./priceBox.module.css";
 
 type ComponentProps = {
-  logo: string;
-  txnbatch: string;
-  statebatch: string;
-  statecounter: number;
-  txncounter: number;
+  data: {
+    logo: string;
+    txnbatch: string;
+    statebatch: string;
+    statecounter: number;
+    txncounter: number;
+  };
 };
 
-function latestBatch({
-  logo,
-  txnbatch,
-  statebatch,
-  statecounter,
-  txncounter,
-}: ComponentProps) {
+function latestBatch({ data }: ComponentProps) {
   return (
     <div>
       <div className={styles.wrap}>
-        <img src={logo} alt="Logo" />
+        <img src={data.logo} alt="Logo" />
       </div>
       <div>
-        <div>{txnbatch}</div>
-        <div>{txncounter}</div>
+        <div>{data.txnbatch}</div>
+        <div>{data.txncounter}</div>
       </div>
       <div>
-        <div>{statebatch}</div>
-        <div>{statecounter}</div>
+        <div>{data.statebatch}</div>
+        <div>{data.statecounter}</div>
       </div>
     </div>
   );

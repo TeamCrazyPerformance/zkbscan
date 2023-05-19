@@ -2,9 +2,11 @@ import React, { useRef, useEffect } from "react";
 import * as d3 from "d3";
 
 interface CoinData {
-  date: string;
-  volume: number;
-  price: number;
+  data: {
+    date: string;
+    volume: number;
+    price: number;
+  };
 }
 
 interface Props {
