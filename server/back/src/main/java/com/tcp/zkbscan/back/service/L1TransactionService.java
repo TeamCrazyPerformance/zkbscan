@@ -2,9 +2,12 @@ package com.tcp.zkbscan.back.service;
 
 import com.tcp.zkbscan.back.entity.L1Transaction;
 import com.tcp.zkbscan.back.repository.L1TransactionRepository;
+import com.tcp.zkbscan.back.specification.L1TransactionSpecification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,4 +24,12 @@ public class L1TransactionService {
     public void saveTransaction(L1Transaction l1Transaction) {
         l1TransactionRepository.save(l1Transaction);
     }
+
+    public List<L1Transaction> getTransactionByToAndType(String to, String type) {
+        Specification<L1Transaction> spec = Specification.where(L1TransactionSpecification.equalType(type));
+        spec = spec.and(L1TransactionSpecification.equalTo(to));
+
+        return l1TransactionRepository.findAll(spec);
+    }
+
 }
