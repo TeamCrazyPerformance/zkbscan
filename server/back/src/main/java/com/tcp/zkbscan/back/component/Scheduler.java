@@ -77,9 +77,9 @@ public class Scheduler {
                         .build();
 
                     l1BlockService.saveBlock(l1Block);
-                    targetBlockNumber = targetBlockNumber.add(BigInteger.ONE);
-
                     log.info("[L1] Block Saved : {}", targetBlockNumber);
+
+                    targetBlockNumber = targetBlockNumber.add(BigInteger.ONE);
                 } catch (IOException e) {
                     log.warn("[L1] Cannot fetch block : {}", targetBlockNumber);
                 }
