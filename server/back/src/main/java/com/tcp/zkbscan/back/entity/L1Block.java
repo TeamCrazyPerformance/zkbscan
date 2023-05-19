@@ -3,9 +3,12 @@ package com.tcp.zkbscan.back.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.*;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -52,7 +55,8 @@ public class L1Block {
 
     private BigInteger totalDifficulty;
 
-    // List transactions;
+    @OneToMany(mappedBy = "block")
+    private List<L1Transaction> transactions = new ArrayList<>();
 
     private String transactionsRoot;
 
