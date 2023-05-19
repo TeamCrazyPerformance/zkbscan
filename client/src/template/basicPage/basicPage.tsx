@@ -1,12 +1,12 @@
 import { useState, ReactNode } from "react";
 
 interface TabularLayoutProps {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   children: ReactNode;
 }
 
-const basicPage: React.FC<TabularLayoutProps> = ({
+const BasicPage: React.FC<TabularLayoutProps> = ({
   title,
   description,
   children,
@@ -42,4 +42,4 @@ const basicPage: React.FC<TabularLayoutProps> = ({
   );
 };
 
-export default basicPage;
+export default BasicPage;

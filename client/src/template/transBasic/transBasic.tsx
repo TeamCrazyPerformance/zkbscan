@@ -3,7 +3,7 @@ interface MyComponentProps {
     [key: string]: string;
   };
 }
-const transBasic = ({ data }: MyComponentProps) => {
+const TransBasic = ({ data }: MyComponentProps) => {
   return (
     <div>
       <div className="wrapper">
@@ -21,4 +21,4 @@ const transBasic = ({ data }: MyComponentProps) => {
   );
 };
 
-export default transBasic;
+export default TransBasic;
