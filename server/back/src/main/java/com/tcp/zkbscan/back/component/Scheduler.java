@@ -3,8 +3,10 @@ package com.tcp.zkbscan.back.component;
 import com.tcp.zkbscan.back.dto.zkbnb.BlockResponse;
 import com.tcp.zkbscan.back.dto.zkbnb.CurrentHeightResponse;
 import com.tcp.zkbscan.back.entity.L1Block;
+import com.tcp.zkbscan.back.entity.L1Transaction;
 import com.tcp.zkbscan.back.entity.L2Block;
 import com.tcp.zkbscan.back.service.L1BlockService;
+import com.tcp.zkbscan.back.service.L1TransactionService;
 import com.tcp.zkbscan.back.service.L2BlockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +31,7 @@ public class Scheduler {
 
     private final Web3j bscL1Rpc;
     private final L1BlockService l1BlockService;
+    private final L1TransactionService l1TransactionService;
     private final L2BlockService l2BlockService;
     private final RestTemplate restTemplate;
 
@@ -63,7 +66,7 @@ public class Scheduler {
             BigInteger targetBlockNumber = startBlockNumber;
             while(targetBlockNumber.compareTo(endBlockNumber.add(BigInteger.ONE)) != 0) {
                 try {
-                    EthBlock.Block newBlock = bscL1Rpc.ethGetBlockByNumber(DefaultBlockParameter.valueOf(targetBlockNumber), false)
+                    EthBlock.Block newBlock = bscL1Rpc.ethGetBlockByNumber(DefaultBlockParameter.valueOf(targetBlockNumber), true)
                             .send()
                             .getBlock();
 
@@ -90,6 +93,32 @@ public class Scheduler {
 
                     l1BlockService.saveBlock(l1Block);
                     log.info("[L1] Block Saved : {}", targetBlockNumber);
+
+                    // Transaction
+                    for (EthBlock.TransactionResult txr : newBlock.getTransactions()) {
+                        EthBlock.TransactionObject tx = (EthBlock.TransactionObject) txr.get();
+
+                        L1Transaction l1Transaction = L1Transaction.builder()
+                                .blockHash(tx.getBlockHash())
+                                .block(l1Block)
+                                .from(tx.getFrom())
+                                .gas(tx.getGas())
+                                .gasPrice(tx.getGasPrice())
+                                .hash(tx.getHash())
+                                .input(tx.getInput())
+                                .nonce(tx.getNonce())
+                                .to(tx.getTo())
+                                .transactionIndex(tx.getTransactionIndex())
+                                .value(tx.getValue())
+                                .type(tx.getType())
+                                .v(tx.getV())
+                                .r(tx.getR())
+                                .s(tx.getS())
+                                .build();
+
+                        l1TransactionService.saveTransaction(l1Transaction);
+                        log.info("[L1] Transaction Saved : {}", l1Transaction.getHash());
+                    }
 
                     targetBlockNumber = targetBlockNumber.add(BigInteger.ONE);
                 } catch (IOException e) {
