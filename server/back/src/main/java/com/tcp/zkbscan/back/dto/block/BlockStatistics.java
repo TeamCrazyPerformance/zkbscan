@@ -10,5 +10,6 @@ import java.math.BigInteger;
 public class BlockStatistics {
 
     private BigInteger latestL1BlockNumber;
+    private BigInteger latestL2BlockHeight;
 
 }

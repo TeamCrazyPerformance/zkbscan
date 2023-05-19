@@ -20,6 +20,7 @@ public class BlockController {
     public BlockStatistics getBlockStatistics() {
         return BlockStatistics.builder()
                 .latestL1BlockNumber(l1BlockService.getLatestBlock().getNumber())
+                .latestL2BlockHeight(l2BlockService.getLatestBlock().getHeight())
                 .build();
     }
 
