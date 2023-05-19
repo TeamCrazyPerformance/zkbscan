@@ -1,8 +1,4 @@
 function Home({ value }: { value: string }) {
-  function handleClick() {
-    console.log("clicked!");
-  }
-
   return (
     <div>
       <div>{/* navbar */}</div>
