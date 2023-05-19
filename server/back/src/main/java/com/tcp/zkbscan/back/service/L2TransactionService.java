@@ -40,7 +40,7 @@ public class L2TransactionService {
 
     public Page<L2Transaction> getTransaction(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        return l2TransactionRepository.findAllByOrderByCreatedAt(pageRequest);
+        return l2TransactionRepository.findAllByOrderByCreatedAtDesc(pageRequest);
     }
 
 }

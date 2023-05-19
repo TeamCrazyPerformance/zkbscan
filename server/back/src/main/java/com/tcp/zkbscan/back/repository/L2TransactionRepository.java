@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface L2TransactionRepository extends JpaRepository<L2Transaction, String>, JpaSpecificationExecutor<L2Transaction> {
 
-    Page<L2Transaction> findAllByOrderByCreatedAt(Pageable pageable);
+    Page<L2Transaction> findAllByOrderByCreatedAtDesc(Pageable pageable);
 
 }
 
