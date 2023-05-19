@@ -3,6 +3,8 @@ package com.tcp.zkbscan.back.service;
 import com.tcp.zkbscan.back.entity.L2Block;
 import com.tcp.zkbscan.back.repository.L2BlockRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -25,6 +27,11 @@ public class L2BlockService {
     public L2Block getBlockByHeight(BigInteger blockNumber) {
         Optional<L2Block> block = l2BlockRepository.findById(blockNumber);
         return block.get();
+    }
+
+    public Page<L2Block> getBlock(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return l2BlockRepository.findAllByOrderByHeightDesc(pageRequest);
     }
 
 }
