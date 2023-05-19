@@ -15,4 +15,8 @@ public class L1BlockService {
         return l1BlockRepository.findFirstByOrderByNumberDesc();
     }
 
+    public void saveBlock(L1Block l1Block) {
+        l1BlockRepository.save(l1Block);
+    }
+
 }
