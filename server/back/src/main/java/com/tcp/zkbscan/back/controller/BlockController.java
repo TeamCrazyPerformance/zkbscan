@@ -3,7 +3,6 @@ package com.tcp.zkbscan.back.controller;
 import com.tcp.zkbscan.back.dto.block.BlockStatistics;
 import com.tcp.zkbscan.back.dto.block.L1BlockDTO;
 import com.tcp.zkbscan.back.dto.block.L2BlockDTO;
-import com.tcp.zkbscan.back.dto.transaction.L1TransactionDTO;
 import com.tcp.zkbscan.back.entity.L1Block;
 import com.tcp.zkbscan.back.entity.L2Block;
 import com.tcp.zkbscan.back.service.L1BlockService;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigInteger;
-import java.util.stream.Collectors;
 
 @Tag(name = "Block", description = "블록 정보")
 @RestController

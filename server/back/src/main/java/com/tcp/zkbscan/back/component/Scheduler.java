@@ -60,15 +60,15 @@ public class Scheduler {
         }
 
         BigInteger startBlockNumber = contractDeployedBlockNumber;
-        if(l1DBLatestBlock != null)
+        if (l1DBLatestBlock != null)
             startBlockNumber = startBlockNumber.max(l1DBLatestBlock.getNumber().add(BigInteger.ONE));
         BigInteger endBlockNumber = l1NodeLatestBlock.getNumber();
 
-        if(startBlockNumber.compareTo(endBlockNumber) < 0) {
+        if (startBlockNumber.compareTo(endBlockNumber) < 0) {
             log.info("[L1] Block Replaying From : {}, To : {}", startBlockNumber, endBlockNumber);
 
             BigInteger targetBlockNumber = startBlockNumber;
-            while(targetBlockNumber.compareTo(endBlockNumber.add(BigInteger.ONE)) != 0) {
+            while (targetBlockNumber.compareTo(endBlockNumber.add(BigInteger.ONE)) != 0) {
                 try {
                     EthBlock.Block newBlock = bscL1Rpc.ethGetBlockByNumber(DefaultBlockParameter.valueOf(targetBlockNumber), true)
                             .send()
@@ -93,7 +93,7 @@ public class Scheduler {
                             .timestamp(newBlock.getTimestamp())
                             .totalDifficulty(newBlock.getTotalDifficulty())
                             .transactionsRoot(newBlock.getTransactionsRoot())
-                        .build();
+                            .build();
 
                     l1BlockService.saveBlock(l1Block);
                     log.info("[L1] Block Saved : {}", targetBlockNumber);
@@ -137,7 +137,7 @@ public class Scheduler {
         L2Block l2DBLatestBlock = l2BlockService.getLatestBlock();
 
         BigInteger startBlockHeight = BigInteger.ZERO;
-        if(l2DBLatestBlock != null)
+        if (l2DBLatestBlock != null)
             startBlockHeight = startBlockHeight.max(l2DBLatestBlock.getHeight().add(BigInteger.ONE));
 
         ResponseEntity<CurrentHeightResponse> currentHeightResponse = restTemplate
@@ -148,11 +148,11 @@ public class Scheduler {
 
         BigInteger endBlockHeight = currentHeightResponse.getBody().getHeight();
 
-        if(startBlockHeight.compareTo(endBlockHeight) < 0) {
+        if (startBlockHeight.compareTo(endBlockHeight) < 0) {
             log.info("[L2] Block Replaying From : {}, To : {}", startBlockHeight, endBlockHeight);
 
             BigInteger targetBlockNumber = startBlockHeight;
-            while(targetBlockNumber.compareTo(endBlockHeight.add(BigInteger.ONE)) != 0) {
+            while (targetBlockNumber.compareTo(endBlockHeight.add(BigInteger.ONE)) != 0) {
                 ResponseEntity<BlockResponse> blockResponse = restTemplate
                         .exchange(String.format("%s/api/v1/block?by=height&value=%d", bscL2RpcUrl, targetBlockNumber),
                                 HttpMethod.GET,

@@ -1,7 +1,7 @@
 package com.tcp.zkbscan.back.dto.transaction;
 
 import com.tcp.zkbscan.back.entity.L1Transaction;
-import lombok.*;
+import lombok.Data;
 
 import java.math.BigInteger;
 
@@ -23,7 +23,7 @@ public class L1TransactionDTO {
     private Long v;
     private String r;
     private String s;
-    
+
     public L1TransactionDTO(L1Transaction l1Transaction) {
         this.setHash(l1Transaction.getHash());
         this.setBlockHash(l1Transaction.getBlockHash());

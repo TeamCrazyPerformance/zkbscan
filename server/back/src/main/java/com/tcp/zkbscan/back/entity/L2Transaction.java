@@ -22,7 +22,7 @@ public class L2Transaction {
     private String info;
     private BigInteger status;
 
-    @Column(name="\"index\"")
+    @Column(name = "\"index\"")
     private BigInteger index;
     private BigInteger gasFeeAssetId;
     private String gasFee;

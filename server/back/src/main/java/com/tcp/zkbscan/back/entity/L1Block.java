@@ -31,7 +31,7 @@ public class L1Block {
     private BigInteger gasUsed;
 
     private String hash;
-    
+
     @Column(columnDefinition = "TEXT")
     private String logsBloom;
 

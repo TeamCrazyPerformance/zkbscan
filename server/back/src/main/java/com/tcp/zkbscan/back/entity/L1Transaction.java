@@ -22,7 +22,7 @@ public class L1Transaction {
     @JoinColumn(name = "blockNumber", referencedColumnName = "number", nullable = false)
     private L1Block block;
 
-    @Column(name="\"from\"")
+    @Column(name = "\"from\"")
     private String from;
 
     private BigInteger gas;
@@ -34,7 +34,7 @@ public class L1Transaction {
 
     private BigInteger nonce;
 
-    @Column(name="\"to\"")
+    @Column(name = "\"to\"")
     private String to;
 
     private BigInteger transactionIndex;
