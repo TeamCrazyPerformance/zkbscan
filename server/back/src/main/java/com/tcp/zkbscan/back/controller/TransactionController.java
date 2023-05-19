@@ -1,8 +1,11 @@
 package com.tcp.zkbscan.back.controller;
 
 import com.tcp.zkbscan.back.dto.transaction.L1TransactionDTO;
+import com.tcp.zkbscan.back.dto.transaction.L2TransactionDTO;
 import com.tcp.zkbscan.back.entity.L1Transaction;
+import com.tcp.zkbscan.back.entity.L2Transaction;
 import com.tcp.zkbscan.back.service.L1TransactionService;
+import com.tcp.zkbscan.back.service.L2TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TransactionController {
 
     private final L1TransactionService l1TransactionService;
+    private final L2TransactionService l2TransactionService;
 
     @Operation(summary = "L1 트랜젝션 조회", description = "TXID로 L1 트랜젝션 데이터를 조회합니다.")
     @GetMapping("/tx/l1/{txid}")
@@ -25,5 +29,13 @@ public class TransactionController {
         L1Transaction l1Transaction = l1TransactionService.getTransaction(hash);
 
         return new L1TransactionDTO(l1Transaction);
+    }
+
+    @Operation(summary = "L2 트랜젝션 조회", description = "TXID로 L2 트랜젝션 데이터를 조회합니다.")
+    @GetMapping("/tx/l2/{txid}")
+    public L2TransactionDTO getL2BlockByNumber(@PathVariable("txid") String hash) {
+        L2Transaction l2Transaction = l2TransactionService.getTransaction(hash);
+
+        return new L2TransactionDTO(l2Transaction);
     }
 }
