@@ -200,7 +200,7 @@ public class Scheduler {
                             .l1Address(tx.getL1_address())
                             .nonce(tx.getNonce())
                             .expireAt(tx.getExpire_at())
-                            .blockHeight(tx.getBlock_height())
+                            .block(l2Block)
                             .createdAt(tx.getCreated_at())
                             .verifyAt(tx.getVerify_at())
                             .stateRoot(tx.getState_root())

@@ -3,9 +3,12 @@ package com.tcp.zkbscan.back.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.*;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -37,7 +40,8 @@ public class L2Block {
 
     private BigInteger verifiedAt;
 
-    //List : txs
+    @OneToMany(mappedBy = "block")
+    private List<L2Transaction> transactions = new ArrayList<>();
 
     private BigInteger status;
 

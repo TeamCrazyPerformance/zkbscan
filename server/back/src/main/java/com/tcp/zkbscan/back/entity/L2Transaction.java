@@ -1,8 +1,6 @@
 package com.tcp.zkbscan.back.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigInteger;
@@ -39,7 +37,11 @@ public class L2Transaction {
     private String l1Address;
     private BigInteger nonce;
     private BigInteger expireAt;
-    private BigInteger blockHeight;
+
+    @ManyToOne
+    @JoinColumn(name = "blockHeight", referencedColumnName = "height", nullable = false)
+    private L2Block block;
+
     private BigInteger createdAt;
     private BigInteger verifyAt;
     private String stateRoot;
