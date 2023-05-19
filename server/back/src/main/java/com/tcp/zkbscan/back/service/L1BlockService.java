@@ -11,7 +11,7 @@ public class L1BlockService {
 
     private final L1BlockRepository l1BlockRepository;
 
-    public L1Block getLastBlock() {
+    public L1Block getLatestBlock() {
         return l1BlockRepository.findFirstByOrderByNumberDesc();
     }
 
