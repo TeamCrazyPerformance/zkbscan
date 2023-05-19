@@ -2,6 +2,7 @@ package com.tcp.zkbscan.back.controller;
 
 import com.tcp.zkbscan.back.dto.block.BlockStatistics;
 import com.tcp.zkbscan.back.dto.block.L1BlockDTO;
+import com.tcp.zkbscan.back.dto.block.L2BlockDTO;
 import com.tcp.zkbscan.back.dto.transaction.L1TransactionDTO;
 import com.tcp.zkbscan.back.entity.L1Block;
 import com.tcp.zkbscan.back.entity.L2Block;
@@ -44,8 +45,10 @@ public class BlockController {
 
     @Operation(summary = "L2 블록 조회", description = "BlockHeight 기준의 L2 블록 데이터를 조회합니다.")
     @GetMapping("/block/l2/{blockHeight}")
-    public L2Block getL2BlockByNumber(@PathVariable("blockHeight") BigInteger blockHeight) {
-        return l2BlockService.getBlockByHeight(blockHeight);
+    public L2BlockDTO getL2BlockByNumber(@PathVariable("blockHeight") BigInteger blockHeight) {
+        L2Block l2Block = l2BlockService.getBlockByHeight(blockHeight);
+
+        return new L2BlockDTO(l2Block);
     }
 
 }
