@@ -8,4 +8,6 @@ import java.math.BigInteger;
 
 @Repository
 public interface L1BlockRepository extends JpaRepository<L1Block, BigInteger> {
+
+    L1Block findFirstByOrderByNumberDesc();
 }
