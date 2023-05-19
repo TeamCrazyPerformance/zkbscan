@@ -24,23 +24,6 @@ public class TransactionController {
     public L1TransactionDTO getL1BlockByNumber(@PathVariable("txid") String hash) {
         L1Transaction l1Transaction = l1TransactionService.getTransaction(hash);
 
-        L1TransactionDTO l1TransactionDTO = new L1TransactionDTO();
-        l1TransactionDTO.setHash(l1Transaction.getHash());
-        l1TransactionDTO.setBlockHash(l1Transaction.getBlockHash());
-        l1TransactionDTO.setBlockNumber(l1Transaction.getBlock().getNumber());
-        l1TransactionDTO.setFrom(l1Transaction.getFrom());
-        l1TransactionDTO.setGas(l1Transaction.getGas());
-        l1TransactionDTO.setGasPrice(l1Transaction.getGasPrice());
-        l1TransactionDTO.setInput(l1Transaction.getInput());
-        l1TransactionDTO.setNonce(l1Transaction.getNonce());
-        l1TransactionDTO.setTo(l1Transaction.getTo());
-        l1TransactionDTO.setTransactionIndex(l1Transaction.getTransactionIndex());
-        l1TransactionDTO.setValue(l1Transaction.getValue());
-        l1TransactionDTO.setType(l1Transaction.getType());
-        l1TransactionDTO.setV(l1Transaction.getV());
-        l1TransactionDTO.setR(l1Transaction.getR());
-        l1TransactionDTO.setS(l1Transaction.getS());
-
-        return l1TransactionDTO;
+        return new L1TransactionDTO(l1Transaction);
     }
 }
