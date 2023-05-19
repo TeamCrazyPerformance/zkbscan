@@ -22,11 +22,11 @@ function Item({
   }
   return (
     <>
-      <li onClick={handleFromClick}>{item.from}</li>
-      <li onClick={handleL2TxHashClick}>{item.l2TxHash}</li>
-      <li>{item.birth.toString()}</li>
-      <li>{item.status}</li>
-      <li onClick={handleL1TxnHash}>{item.l1TxnHash}</li>
+      <div onClick={handleFromClick}>{item.from}</div>
+      <div onClick={handleL2TxHashClick}>{item.l2TxHash}</div>
+      <div>{item.birth.toString()}</div>
+      <div>{item.status}</div>
+      <div onClick={handleL1TxnHash}>{item.l1TxnHash}</div>
     </>
   );
 }
@@ -44,11 +44,11 @@ export default function L1ToL2({
 }) {
   return (
     <>
-      <ul>
+      <div>
         {itemList.map((item) => (
           <Item item={item} />
         ))}
-      </ul>
+      </div>
     </>
   );
 }

@@ -16,10 +16,10 @@ function Item({
   }
   return (
     <>
-      <li onClick={handleBlockNoClick}>{item.blockNo}</li>
-      <li onClick={handleL2TxHashClick}>{item.l2TxHash}</li>
-      <li>{item.birth.toString()}</li>
-      <li onClick={handleL1TxHashClick}>{item.l1TxHash}</li>
+      <div onClick={handleBlockNoClick}>{item.blockNo}</div>
+      <div onClick={handleL2TxHashClick}>{item.l2TxHash}</div>
+      <div>{item.birth.toString()}</div>
+      <div onClick={handleL1TxHashClick}>{item.l1TxHash}</div>
     </>
   );
 }
@@ -36,11 +36,11 @@ export default function L1ToL2({
 }) {
   return (
     <>
-      <ul>
+      <div>
         {itemList.map((item) => (
           <Item item={item} />
         ))}
-      </ul>
+      </div>
     </>
   );
 }
