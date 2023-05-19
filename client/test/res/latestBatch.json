@@ -1,0 +1,7 @@
+{
+    "logo" : "logo_tmp",
+    "txnbatch" : "txnbatch_tmp",
+    "statebatch" : "statebatch_tmp",
+    "statecounter" : "statecounter_tmp",
+    "txncounter" : "txncounter_tmp"
+}
