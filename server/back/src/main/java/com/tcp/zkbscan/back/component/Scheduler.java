@@ -2,12 +2,15 @@ package com.tcp.zkbscan.back.component;
 
 import com.tcp.zkbscan.back.dto.zkbnb.BlockResponse;
 import com.tcp.zkbscan.back.dto.zkbnb.CurrentHeightResponse;
+import com.tcp.zkbscan.back.dto.zkbnb.Transaction;
 import com.tcp.zkbscan.back.entity.L1Block;
 import com.tcp.zkbscan.back.entity.L1Transaction;
 import com.tcp.zkbscan.back.entity.L2Block;
+import com.tcp.zkbscan.back.entity.L2Transaction;
 import com.tcp.zkbscan.back.service.L1BlockService;
 import com.tcp.zkbscan.back.service.L1TransactionService;
 import com.tcp.zkbscan.back.service.L2BlockService;
+import com.tcp.zkbscan.back.service.L2TransactionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,6 +36,7 @@ public class Scheduler {
     private final L1BlockService l1BlockService;
     private final L1TransactionService l1TransactionService;
     private final L2BlockService l2BlockService;
+    private final L2TransactionService l2TransactionService;
     private final RestTemplate restTemplate;
 
     @Value("${bsc.l1.contract.block}")
@@ -173,6 +177,40 @@ public class Scheduler {
 
                 l2BlockService.saveBlock(l2Block);
                 log.info("[L2] Block Saved : {}", targetBlock.getHeight());
+
+                // Transaction
+                for (Transaction tx : targetBlock.getTxs()) {
+                    L2Transaction l2Transaction = L2Transaction.builder()
+                            .hash(tx.getHash())
+                            .type(tx.getType())
+                            .amount(tx.getAmount())
+                            .info(tx.getInfo())
+                            .status(tx.getStatus())
+                            .index(tx.getIndex())
+                            .gasFeeAssetId(tx.getGas_fee_asset_id())
+                            .gasFee(tx.getGas_fee())
+                            .nftIndex(tx.getNft_index())
+                            .collectionId(tx.getCollection_id())
+                            .assetId(tx.getAsset_id())
+                            .assetName(tx.getAsset_name())
+                            .nativeAddress(tx.getNative_address())
+                            .extraInfo(tx.getExtra_info())
+                            .memo(tx.getMemo())
+                            .accountIndex(tx.getAccount_index())
+                            .l1Address(tx.getL1_address())
+                            .nonce(tx.getNonce())
+                            .expireAt(tx.getExpire_at())
+                            .blockHeight(tx.getBlock_height())
+                            .createdAt(tx.getCreated_at())
+                            .verifyAt(tx.getVerify_at())
+                            .stateRoot(tx.getState_root())
+                            .toAccountIndex(tx.getTo_account_index())
+                            .toL1Address(tx.getTo_l1_address())
+                            .build();
+
+                    l2TransactionService.saveTransaction(l2Transaction);
+                    log.info("[L2] Transaction Saved : {}", l2Transaction.getHash());
+                }
 
                 targetBlockNumber = targetBlockNumber.add(BigInteger.ONE);
             }
