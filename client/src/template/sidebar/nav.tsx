@@ -10,14 +10,14 @@ type ComponentProps = {
 export default function Navbar({ itemList }: ComponentProps) {
   return (
     <div className="navbar">
-      <h1>Navbar</h1>
-      <ul>
+      <div>Navbar</div>
+      <div>
         {itemList.map((item) => (
-          <li key={item.key}>
+          <div key={item.key}>
             <Link to={`${item.key}`}>{item.name}</Link>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
