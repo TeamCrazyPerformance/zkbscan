@@ -1,5 +1,6 @@
 package com.tcp.zkbscan.back.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
@@ -19,6 +20,7 @@ public class L1Block {
 
     private BigInteger difficulty;
 
+    @Column(columnDefinition = "TEXT")
     private String extraData;
 
     private BigInteger gasLimit;
@@ -26,7 +28,8 @@ public class L1Block {
     private BigInteger gasUsed;
 
     private String hash;
-
+    
+    @Column(columnDefinition = "TEXT")
     private String logsBloom;
 
     private String miner;

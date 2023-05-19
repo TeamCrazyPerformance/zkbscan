@@ -1,5 +1,6 @@
 package com.tcp.zkbscan.back.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
@@ -25,6 +26,7 @@ public class L2Block {
 
     private String pendingOnChainOperationsHash;
 
+    @Column(columnDefinition = "TEXT")
     private String pendingOnChainOperationsPubData;
 
     private String committedTxHash;
