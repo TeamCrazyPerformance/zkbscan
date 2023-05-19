@@ -14,7 +14,7 @@ function priceBox({ logo, title, price, altprice, flucrate }: ComponentProps) {
       <div className={styles.wrap}>
         <img src={logo} alt="Logo" />
       </div>
-      <div>{title}</div>
+      <div>{title} PRICE</div>
       <div>
         <div>{price}</div>
         <div>{altprice}</div>
