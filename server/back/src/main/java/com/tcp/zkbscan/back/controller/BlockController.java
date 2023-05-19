@@ -2,6 +2,7 @@ package com.tcp.zkbscan.back.controller;
 
 import com.tcp.zkbscan.back.dto.block.BlockStatistics;
 import com.tcp.zkbscan.back.entity.L1Block;
+import com.tcp.zkbscan.back.entity.L2Block;
 import com.tcp.zkbscan.back.service.L1BlockService;
 import com.tcp.zkbscan.back.service.L2BlockService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,6 +35,12 @@ public class BlockController {
     @GetMapping("/block/l1/{blockNumber}")
     public L1Block getL1BlockByNumber(@PathVariable("blockNumber") BigInteger blockNumber) {
         return l1BlockService.getBlockByNumber(blockNumber);
+    }
+
+    @Operation(summary = "L2 블록 조회", description = "BlockHeight 기준의 L2 블록 데이터를 조회합니다.")
+    @GetMapping("/block/l2/{blockHeight}")
+    public L2Block getL2BlockByNumber(@PathVariable("blockHeight") BigInteger blockHeight) {
+        return l2BlockService.getBlockByHeight(blockHeight);
     }
 
 }

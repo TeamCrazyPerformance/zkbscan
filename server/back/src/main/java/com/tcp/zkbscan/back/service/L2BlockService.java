@@ -5,6 +5,9 @@ import com.tcp.zkbscan.back.repository.L2BlockRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class L2BlockService {
@@ -17,6 +20,11 @@ public class L2BlockService {
 
     public void saveBlock(L2Block l2Block) {
         l2BlockRepository.save(l2Block);
+    }
+
+    public L2Block getBlockByHeight(BigInteger blockNumber) {
+        Optional<L2Block> block = l2BlockRepository.findById(blockNumber);
+        return block.get();
     }
 
 }
