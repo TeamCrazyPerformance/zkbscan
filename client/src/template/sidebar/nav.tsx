@@ -1,34 +1,23 @@
-/** Component for NavigationSideBar Item: param(value: value of list; isActivate: is page active?) **/
-function Item({ value, isActivate }: { value: string; isActivate: boolean }) {
-  function handleOnClick() {
-    console.log(`item(${value}) of NavigationSideBar is Clicked!!`);
-  }
+import { Link } from "react-router-dom";
 
-  return (
-    <>
-      <li className={isActivate ? "active" : ""} onClick={handleOnClick}>
-        {value}
-      </li>
-    </>
-  );
-}
+type ComponentProps = {
+  itemList: {
+    name: string;
+    key: string;
+  }[];
+};
 
-/** Component for map Item Component: param(itemList: Object List of Item)**/
-export default function NavigationSideBar({
-  itemList,
-}: {
-  itemList: { name: string; isActivate: boolean }[];
-}) {
+export default function Navbar({ itemList }: ComponentProps) {
   return (
-    <nav className="sidebar">
-      <div className="sidebar-header">
-        <h3>side bar header</h3>
-      </div>
-      <ul className="list-unstyled components">
+    <div className="navbar">
+      <h1>Navbar</h1>
+      <ul>
         {itemList.map((item) => (
-          <Item value={item.name} isActivate={item.isActivate} />
+          <li key={item.key}>
+            <Link to={`${item.key}`}>{item.name}</Link>
+          </li>
         ))}
       </ul>
-    </nav>
+    </div>
   );
 }

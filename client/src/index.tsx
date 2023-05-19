@@ -1,12 +1,14 @@
-import React, { StrictMode } from "react";
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import React from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import Home from "./App";
+import App from "./App";
+import { BrowserRouter, HashRouter } from "react-router-dom";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
 root.render(
-  <StrictMode>
-    <Home />
-  </StrictMode>
+  <HashRouter>
+    <App />
+  </HashRouter>
 );
