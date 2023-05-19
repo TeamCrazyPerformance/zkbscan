@@ -1,5 +1,3 @@
-import React from "react";
-
 function Square({ value }: { value: string }) {
   function handleClick() {
     console.log("clicked!");
