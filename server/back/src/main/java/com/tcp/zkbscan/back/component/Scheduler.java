@@ -1,12 +1,16 @@
 package com.tcp.zkbscan.back.component;
 
+import com.tcp.zkbscan.back.dto.zkbnb.BlockResponse;
 import com.tcp.zkbscan.back.entity.L1Block;
 import com.tcp.zkbscan.back.service.L1BlockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.DefaultBlockParameterName;
@@ -22,9 +26,13 @@ public class Scheduler {
 
     private final Web3j bscL1Rpc;
     private final L1BlockService l1BlockService;
+    private final RestTemplate restTemplate;
 
     @Value("${bsc.l1.contract.block}")
     private BigInteger contractDeployedBlockNumber;
+
+    @Value("${bsc.l2.rpc.url}")
+    private String bscL2RpcUrl;
 
     @Scheduled(fixedDelay = 1000)
     public void fetchL1NewBlock() {
@@ -85,5 +93,18 @@ public class Scheduler {
                 }
             }
         }
+    }
+
+    @Scheduled(fixedDelay = 1000)
+    public void fetchL2NewBlock() {
+        BigInteger offset = BigInteger.ZERO;
+
+        ResponseEntity<BlockResponse> response = restTemplate
+                .exchange(bscL2RpcUrl + "/api/v1/blocks?offset=0&limit=100",
+                        HttpMethod.GET,
+                        null,
+                        BlockResponse.class);
+
+        log.info(response.getBody().toString());
     }
 }
