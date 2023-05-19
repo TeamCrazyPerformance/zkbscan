@@ -15,7 +15,7 @@ public class BlockController {
 
     private final L1BlockService l1BlockService;
 
-    @Operation(summary = "블록 통계 조회")
+    @Operation(summary = "블록 통계 조회", description = "L1, L2의 최근 블록 넘버와 같은 블록 통계를 조회합니다.")
     @GetMapping("/block")
     public BlockStatistics getBlockStatistics() {
         return BlockStatistics.builder()
