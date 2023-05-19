@@ -8,7 +8,7 @@ type ComponentProps = {
   };
 };
 
-function latestTrans({ data }: ComponentProps) {
+function LatestTrans({ data }: ComponentProps) {
   return (
     <div>
       <div className={styles.wrap}>
@@ -23,4 +23,4 @@ function latestTrans({ data }: ComponentProps) {
   );
 }
 
-export default latestTrans;
+export default LatestTrans;

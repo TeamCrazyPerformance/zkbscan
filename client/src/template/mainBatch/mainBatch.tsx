@@ -11,7 +11,7 @@ type ComponentProps = {
   };
 };
 
-function mainBatch({ data }: ComponentProps) {
+function MainBatch({ data }: ComponentProps) {
   return (
     <div>
       <div className={styles.wrap}>
@@ -31,4 +31,4 @@ function mainBatch({ data }: ComponentProps) {
   );
 }
 
-export default mainBatch;
+export default MainBatch;

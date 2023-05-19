@@ -10,7 +10,7 @@ type ComponentProps = {
   };
 };
 
-function priceBox({ data }: ComponentProps) {
+function PriceBox({ data }: ComponentProps) {
   return (
     <div>
       <div className={styles.wrap}>
@@ -26,4 +26,4 @@ function priceBox({ data }: ComponentProps) {
   );
 }
 
-export default priceBox;
+export default PriceBox;

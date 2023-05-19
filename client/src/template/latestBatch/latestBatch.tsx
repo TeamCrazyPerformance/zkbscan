@@ -10,7 +10,7 @@ type ComponentProps = {
   };
 };
 
-function latestBatch({ data }: ComponentProps) {
+function LatestBatch({ data }: ComponentProps) {
   return (
     <div>
       <div className={styles.wrap}>
@@ -28,4 +28,4 @@ function latestBatch({ data }: ComponentProps) {
   );
 }
 
-export default latestBatch;
+export default LatestBatch;

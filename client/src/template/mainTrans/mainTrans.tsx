@@ -12,7 +12,7 @@ type ComponentProps = {
   };
 };
 
-function mainTrans({ data }: ComponentProps) {
+function MainTrans({ data }: ComponentProps) {
   return (
     <div>
       <img src={data.icon} alt="Logo" />
@@ -29,4 +29,4 @@ function mainTrans({ data }: ComponentProps) {
   );
 }
 
-export default mainTrans;
+export default MainTrans;

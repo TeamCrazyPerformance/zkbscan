@@ -8,8 +8,4 @@ class Layer2Layer {
   }
 }
 
-class Layer1toLayer2 extends Layer2Layer {
-  blockNo: number;
-}
-
 class Layer2toLayer1 extends Layer2Layer {}

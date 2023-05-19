@@ -31,7 +31,7 @@ function Item({
   );
 }
 
-export default function L1ToL2({
+export default function L2ToL1({
   itemList,
 }: {
   itemList: {
