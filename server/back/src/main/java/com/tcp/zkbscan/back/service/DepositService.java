@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,11 +29,38 @@ public class DepositService {
 
     public List<DepositTransactionDTO> getDeposits() {
         List<L1TransactionDTO> l1Deposits = getDepositsOnL1();
-        //List<L2TransactionDTO> l2Deposits = getDepositsOnL2();
+        List<L2TransactionDTO> l2Deposits = getDepositsOnL2();
 
-        log.info(l1Deposits.toString());
-        //log.info(l2Deposits.toString());
-        return null;
+        List<L1TransactionDTO> l1DepositsByDepositBNB = l1Deposits.stream()
+                .filter(i -> i.getInput().startsWith("0x684a5843"))
+                .sorted(Comparator.comparing(L1TransactionDTO::getBlockNumber).reversed())
+                .toList();
+
+        List<L2TransactionDTO> l2DepositsByDepositBNB = l2Deposits.stream()
+                .filter(i -> i.getType().equals(BigInteger.valueOf(2)) && i.getAssetName().equals("BNB"))
+                .sorted(Comparator.comparing(L2TransactionDTO::getBlockHeight).reversed())
+                .toList();
+
+        log.info(l1DepositsByDepositBNB.toString());
+        log.info(l2DepositsByDepositBNB.toString());
+
+        log.info("{} {}", l1DepositsByDepositBNB.size(), l2DepositsByDepositBNB.size());
+
+        List<DepositTransactionDTO> result = new ArrayList<>();
+        for(int i = 0; i < l1DepositsByDepositBNB.size(); i++) {
+            L1TransactionDTO l1TransactionDTO = l1DepositsByDepositBNB.get(i);
+            L2TransactionDTO l2TransactionDTO = l2DepositsByDepositBNB.get(i);
+
+            DepositTransactionDTO depositTransaction = new DepositTransactionDTO();
+            depositTransaction.setL1BlockNumber(l1TransactionDTO.getBlockNumber());
+            depositTransaction.setL1Txid(l1TransactionDTO.getHash());
+            depositTransaction.setL2BlockHeight(l2TransactionDTO.getBlockHeight());
+            depositTransaction.setL2Txid(l2TransactionDTO.getHash());
+
+            result.add(depositTransaction);
+        }
+
+        return result;
     }
 
     private List<L1TransactionDTO> getDepositsOnL1() {

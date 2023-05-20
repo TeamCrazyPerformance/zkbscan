@@ -63,4 +63,9 @@ public class TransactionController {
         return new PageDTO<>(dtos, pageInfoDTO);
     }
 
+    @Operation(summary = "Deposit 트랜젝션 조회", description = "L1에서 L2로 Deposit된 트랜젝션 데이터를 조회합니다.")
+    @GetMapping("/tx/deposit")
+    public List<DepositTransactionDTO> getL2BlockByNumber() {
+        return depositService.getDeposits();
+    }
 }
