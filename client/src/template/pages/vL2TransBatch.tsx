@@ -1,13 +1,17 @@
+function VL2TransBatch() {
+  return <></>;
+}
+
 interface MyComponentProps {
   data: {
     [key: string]: string;
   };
 }
-const stateBatchBasic = ({ data }: MyComponentProps) => {
+const VL2TransBatchBasic = ({ data }: MyComponentProps) => {
   return (
     <div>
       <div className="wrapper">
-        <div className="box">{data.statebatch}</div>
+        <div className="box">{data.txnbatch}</div>
         <div className="box">{data.age}</div>
         <div className="box">{data.batchsize}</div>
         <div className="box">{data.L1hash}</div>
@@ -16,5 +20,4 @@ const stateBatchBasic = ({ data }: MyComponentProps) => {
     </div>
   );
 };
-
-export default stateBatchBasic;
+export default VL2TransBatch;
