@@ -10,7 +10,7 @@ interface AppState {
 }
 interface SearchValue {
   searchValue: string;
-  setSearchValue: (searchValue: string) => string;
+  setSearchValue: (searchValue: string) => void;
 }
 interface ArticlState {
   searchValue: string;
