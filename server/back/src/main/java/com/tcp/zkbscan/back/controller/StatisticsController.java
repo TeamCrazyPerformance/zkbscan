@@ -1,6 +1,7 @@
 package com.tcp.zkbscan.back.controller;
 
 import com.tcp.zkbscan.back.dto.statistics.BasicStatistics;
+import com.tcp.zkbscan.back.dto.statistics.TVLResponseDTO;
 import com.tcp.zkbscan.back.dto.statistics.TransactionChart;
 import com.tcp.zkbscan.back.service.L1BlockService;
 import com.tcp.zkbscan.back.service.L2BlockService;
@@ -36,5 +37,11 @@ public class StatisticsController {
     @GetMapping("/statistics/chart")
     public List<TransactionChart> getTransactionChart() {
         return statisticsService.getTransactionChart();
+    }
+
+    @Operation(summary = "TVL 조회", description = "zkBNB에 예치중인 토큰들의 가치를 조회합니다.")
+    @GetMapping("/statistics/tvl")
+    public TVLResponseDTO getTvl() {
+        return statisticsService.getTvl();
     }
 }

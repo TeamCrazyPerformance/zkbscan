@@ -10,4 +10,8 @@ public class L2TransactionSpecification {
     public static Specification<L2Transaction> equalType(BigInteger type) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("type"), type);
     }
+
+    public static Specification<L2Transaction> notNullAssetName() {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.isNotNull(root.get("assetName"));
+    }
 }

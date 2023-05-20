@@ -47,4 +47,11 @@ public class L2TransactionService {
         return l2TransactionRepository.findAll();
     }
 
+    public List<L2Transaction> getTransactionContainAssetByType(BigInteger type) {
+        Specification<L2Transaction> spec = Specification.where(L2TransactionSpecification.notNullAssetName());
+        spec = spec.and(L2TransactionSpecification.equalType(type));
+
+        return l2TransactionRepository.findAll(spec);
+    }
+
 }
