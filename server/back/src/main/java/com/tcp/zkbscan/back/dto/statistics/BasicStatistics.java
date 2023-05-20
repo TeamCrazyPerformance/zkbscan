@@ -11,4 +11,5 @@ public class BasicStatistics {
     private BigDecimal bnbPrice;
     private BigInteger latestL1BlockNumber;
     private BigInteger latestl2BlockNumber;
+    private BigDecimal tvl;
 }

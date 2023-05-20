@@ -30,6 +30,7 @@ public class StatisticsController {
         basicStatistics.setBnbPrice(statisticsService.getBNBPrice());
         basicStatistics.setLatestL1BlockNumber(l1BlockService.getLatestBlock().getNumber());
         basicStatistics.setLatestl2BlockNumber(l2BlockService.getLatestBlock().getHeight());
+        basicStatistics.setTvl(statisticsService.getTvl().getValue());
         return basicStatistics;
     }
 
