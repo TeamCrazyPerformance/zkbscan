@@ -54,6 +54,13 @@ public class L2TransactionService {
         return l2TransactionRepository.findAll(spec);
     }
 
+    public List<L2Transaction> getTransactionByAddress(String address) {
+        Specification<L2Transaction> spec = Specification.where(L2TransactionSpecification.equalL1Address(address));
+        spec = spec.or(L2TransactionSpecification.equalToL1Address(address));
+
+        return l2TransactionRepository.findAll(spec);
+    }
+
     public Long getTotalTransactionCount() {
         return l2TransactionRepository.countBy();
     }

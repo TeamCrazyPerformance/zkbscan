@@ -17,7 +17,6 @@ import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -80,7 +79,14 @@ public class TransactionController {
 
     @Operation(summary = "Withdrawal 트랜젝션 조회", description = "L2에서 L1로 Withdrawal된 트랜젝션 데이터를 조회합니다.")
     @GetMapping("/tx/withdrawal")
-    public List<DepositTransactionDTO> getWithdrawalTransaction() {
-        return withdrawalService.getWithdrawals();
+    public PageDTO<List<DepositTransactionDTO>> getWithdrawalTransaction(@Positive @RequestParam int page,
+                                                                @Positive @RequestParam int size) {
+        List<DepositTransactionDTO> withdrawals = withdrawalService.getWithdrawals();
+
+        final int start = (page - 1) * size;
+        final int end = Math.min((start + size), withdrawals.size());
+        PageInfoDTO pageInfoDTO = new PageInfoDTO(page, size, withdrawals.size(), (int) Math.ceil((double)withdrawals.size() / size));
+
+        return new PageDTO<>(withdrawals.subList(start, end), pageInfoDTO);
     }
 }
