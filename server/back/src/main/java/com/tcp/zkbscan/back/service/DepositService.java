@@ -29,26 +29,21 @@ public class DepositService {
     private String l1ContractAddress;
 
     public List<DepositTransactionDTO> getDeposits() {
-        List<L1TransactionDTO> l1Deposits = getDepositsOnL1();
-        List<L2TransactionDTO> l2Deposits = getDepositsOnL2();
-
-        List<L1TransactionDTO> l1DepositsByDepositBNB = l1Deposits.stream()
+        List<L1TransactionDTO> l1Deposits = getDepositsOnL1().stream()
                 .filter(i -> i.getInput().startsWith("0x684a5843") /* depositBNB */
                         || i.getInput().startsWith("0x10ff3764") /* depositBEP20 */
                         || i.getInput().startsWith("0x82a5b1aa")) /* depositNft */
                 .sorted(Comparator.comparing(L1TransactionDTO::getBlockNumber).reversed())
                 .toList();
 
-        List<L2TransactionDTO> l2DepositsByDepositBNB = l2Deposits.stream()
-                .filter(i -> i.getType().equals(BigInteger.valueOf(2))
-                        || i.getType().equals(BigInteger.valueOf(3)))
+        List<L2TransactionDTO> l2Deposits = getDepositsOnL2().stream()
                 .sorted(Comparator.comparing(L2TransactionDTO::getBlockHeight).reversed())
                 .toList();
 
         List<DepositTransactionDTO> result = new ArrayList<>();
-        for(int i = 0; i < l1DepositsByDepositBNB.size(); i++) {
-            L1TransactionDTO l1TransactionDTO = l1DepositsByDepositBNB.get(i);
-            L2TransactionDTO l2TransactionDTO = l2DepositsByDepositBNB.get(i);
+        for(int i = 0; i < l1Deposits.size(); i++) {
+            L1TransactionDTO l1TransactionDTO = l1Deposits.get(i);
+            L2TransactionDTO l2TransactionDTO = l2Deposits.get(i);
 
             DepositTransactionDTO depositTransaction = new DepositTransactionDTO();
             depositTransaction.setL1BlockNumber(l1TransactionDTO.getBlockNumber());
