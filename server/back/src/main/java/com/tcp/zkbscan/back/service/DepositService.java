@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class DepositService {
 
+    private final L1BlockService l1BlockService;
     private final L1TransactionService l1TransactionService;
     private final L2TransactionService l2TransactionService;
 
@@ -56,6 +57,11 @@ public class DepositService {
             depositTransaction.setL1Txid(l1TransactionDTO.getHash());
             depositTransaction.setL2BlockHeight(l2TransactionDTO.getBlockHeight());
             depositTransaction.setL2Txid(l2TransactionDTO.getHash());
+            depositTransaction.setL1Address(l1TransactionDTO.getFrom());
+            depositTransaction.setL2Address(l2TransactionDTO.getToL1Address());
+            //depositTransaction.setL1Timestamp(l1BlockService.getBlockByNumber(l1TransactionDTO.getBlockNumber()).getTimestamp());
+            depositTransaction.setL2CreatedAt(l2TransactionDTO.getCreatedAt());
+            depositTransaction.setL2VerifyAt(l2TransactionDTO.getVerifyAt());
 
             result.add(depositTransaction);
         }

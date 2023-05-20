@@ -48,7 +48,7 @@ public class Scheduler {
     @Value("${bsc.l2.rpc.url}")
     private String bscL2RpcUrl;
 
-    //@Scheduled(fixedDelay = 1000)
+    @Scheduled(fixedDelay = 1000)
     public void fetchL1NewBlock() {
         EthBlock.Block l1NodeLatestBlock;
         L1Block l1DBLatestBlock;
