@@ -11,8 +11,8 @@ public class L2TransactionSpecification {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("type"), type);
     }
 
-    public static Specification<L2Transaction> notNullAssetName() {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.isNotNull(root.get("assetName"));
+    public static Specification<L2Transaction> notEqualAssetId(BigInteger assetId) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.notEqual(root.get("assetId"), assetId);
     }
 
     public static Specification<L2Transaction> equalL1Address(String l1Address) {
