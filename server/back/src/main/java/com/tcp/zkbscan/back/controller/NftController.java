@@ -1,9 +1,13 @@
 package com.tcp.zkbscan.back.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tcp.zkbscan.back.dto.PageDTO;
 import com.tcp.zkbscan.back.dto.PageInfoDTO;
+import com.tcp.zkbscan.back.dto.nft.NftMetadata;
+import com.tcp.zkbscan.back.dto.nft.NftMintDTO;
+import com.tcp.zkbscan.back.dto.nft.NftMintInfo;
 import com.tcp.zkbscan.back.dto.nft.NftTransferDTO;
 import com.tcp.zkbscan.back.entity.L2Transaction;
 import com.tcp.zkbscan.back.service.L2TransactionService;
@@ -45,6 +49,33 @@ public class NftController {
                 .to(i.getToL1Address())
                 .nftIndex(i.getNftIndex())
                 .build()).toList(), pageInfoDTO);
+    }
+
+    @GetMapping("/nft/mint")
+    private PageDTO<List<NftMintDTO>> getNftMint(@Positive @RequestParam int page,
+                                                 @Positive @RequestParam int size) {
+        List<BigInteger> types = new ArrayList<>();
+        types.add(BigInteger.valueOf(7));
+        List<L2Transaction> transactions = l2TransactionService.getTransactionByTypes(types);
+
+        final int start = (page - 1) * size;
+        final int end = Math.min((start + size), transactions.size());
+        PageInfoDTO pageInfoDTO = new PageInfoDTO(page, size, transactions.size(), (int) Math.ceil((double) transactions.size() / size));
+
+        return new PageDTO<>(transactions.subList(start, end).stream().map(i -> {
+            try {
+                return NftMintDTO.builder()
+                        .txid(i.getHash())
+                        .timestamp(i.getCreatedAt())
+                        .maker(i.getToL1Address())
+                        .nftImageUrl(objectMapper.readValue(objectMapper.readValue(i.getInfo(), NftMintInfo.class).getMetaData(), NftMetadata.class).getImage())
+                        .nftName(objectMapper.readValue(objectMapper.readValue(i.getInfo(), NftMintInfo.class).getMetaData(), NftMetadata.class).getName())
+                        .nftIndex(i.getNftIndex())
+                        .build();
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        }).toList(), pageInfoDTO);
     }
 
     private String convertType(BigInteger type) {
