@@ -20,21 +20,9 @@ interface PageState {
   setId: (id: number) => void;
 }
 
-interface ArticlState {
-  currentPage: number;
-  totalPages: number;
-  pageSize: number;
-  data: any[];
+interface Page {
+  page: number;
   setPage: (page: number) => void;
-  setPageSize: (pageSize: number) => void;
-  setTotalPage: (totalPages: number) => void;
-  showBlockPage: () => void;
-  nextBlockPage: () => void;
-  prevBlockPage: () => void;
-  showTransPage: () => void;
-  nextTransPage: () => void;
-  goToNewestPage: () => void;
-  goToOldestPage: () => void;
 }
 interface AppActions {
   search: (input: string) => void;
@@ -100,6 +88,19 @@ export const usePageState = create<PageState>()(
       (set) => ({
         id: 0,
         setId: (id: number) => set((state) => ({ ...state, id: id })),
+      }),
+      {
+        name: "id",
+      }
+    )
+  )
+);
+export const usePage = create<Page>()(
+  devtools(
+    persist(
+      (set) => ({
+        page: 0,
+        setPage: (page: number) => set((state) => ({ ...state, page: page })),
       }),
       {
         name: "id",

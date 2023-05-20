@@ -1,16 +1,17 @@
+import { l1l2trans } from "../type";
+
 /*
  *   Blbok
  */
-export const FetchL2Block = async (
-  page: number,
-  size: number
-): Promise<any> => {
+export const FetchL2Block = async (page: number, size: number) => {
   const url = `http://172.16.41.132:8080/block/l2?page=${page}&size=${size}`;
-  const res = await (
+  const res: l1l2trans[] = await (
     await fetch(url, {
       method: "GET",
     })
   ).json();
+
+  console.log(res);
 
   return res;
 };
@@ -37,10 +38,7 @@ export const FetchL1BlockHeight = async (param: number) => {
   return res;
 };
 
-export const FetchL2Transactions = async (
-  page: number,
-  size: number
-): Promise<any> => {
+export const FetchL2Transactions = async (page: number, size: number) => {
   const url = `http://172.16.41.132:8080/tx/l2?page=${page}&size=${size}`;
   const res = await (
     await fetch(url, {
@@ -76,11 +74,8 @@ export const FetchL1TransactionTxid = async (param: string) => {
   return res;
 };
 
-export const FetchDepositTransaction = async (
-  page: number,
-  size: number
-): Promise<any> => {
-  const url = `http://172.16.41.132:8080/tx/deposit?page=${page}&size=${size}`;
+export const FetchDepositTransaction = async (page: number, size: number) => {
+  const url = `http://49.247.30.69:8080/tx/deposit?page=${page}&size=${size}`;
   const res = await (
     await fetch(url, {
       method: "GET",
