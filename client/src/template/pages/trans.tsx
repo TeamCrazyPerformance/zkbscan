@@ -1,5 +1,11 @@
-import BasicPage from "../basicPage/basicPage";
-import TransBasic from "../transBasic/transBasic";
+import BasicPage from "../basic/basicPage/basicPage";
+import TransBasic from "../basic/transBasic/transBasic";
+interface MyComponentProps {
+  data: {
+    [key: string]: string;
+  };
+}
+
 function Trans() {
   return (
     <div>
