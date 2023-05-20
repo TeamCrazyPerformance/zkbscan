@@ -42,7 +42,6 @@ export const useNavStore = create<AppState>()(
           { name: "Transactions", key: "trans" },
           { name: "L1 -> L2 Transactions", key: "l1l2trans" },
           { name: "L2 -> L1 Transactions", key: "l2l1trans" },
-          { name: "Contract internal transactions", key: "cit" },
           { name: "L1 Transactions batches", key: "l1tb" },
           { name: "View L1 state batches", key: "vl1sb" },
           { name: "L2 Transactions", key: "l2t" },
