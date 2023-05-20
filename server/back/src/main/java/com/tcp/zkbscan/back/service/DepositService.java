@@ -59,7 +59,7 @@ public class DepositService {
             depositTransaction.setL2Txid(l2TransactionDTO.getHash());
             depositTransaction.setL1Address(l1TransactionDTO.getFrom());
             depositTransaction.setL2Address(l2TransactionDTO.getToL1Address());
-            //depositTransaction.setL1Timestamp(l1BlockService.getBlockByNumber(l1TransactionDTO.getBlockNumber()).getTimestamp());
+            depositTransaction.setL1Timestamp(l1BlockService.getBlockByNumber(l1TransactionDTO.getBlockNumber()).getTimestamp());
             depositTransaction.setL2CreatedAt(l2TransactionDTO.getCreatedAt());
             depositTransaction.setL2VerifyAt(l2TransactionDTO.getVerifyAt());
 
