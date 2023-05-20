@@ -33,12 +33,13 @@ public class DepositService {
         List<L2TransactionDTO> l2Deposits = getDepositsOnL2();
 
         List<L1TransactionDTO> l1DepositsByDepositBNB = l1Deposits.stream()
-                .filter(i -> i.getInput().startsWith("0x684a5843"))
+                .filter(i -> i.getInput().startsWith("0x684a5843") || i.getInput().startsWith("0x82a5b1aa"))
                 .sorted(Comparator.comparing(L1TransactionDTO::getBlockNumber).reversed())
                 .toList();
 
         List<L2TransactionDTO> l2DepositsByDepositBNB = l2Deposits.stream()
-                .filter(i -> i.getType().equals(BigInteger.valueOf(2)) && i.getAssetName().equals("BNB"))
+                .filter(i -> (i.getType().equals(BigInteger.valueOf(2)) && i.getAssetName().equals("BNB"))
+                        || i.getType().equals(BigInteger.valueOf(3)))
                 .sorted(Comparator.comparing(L2TransactionDTO::getBlockHeight).reversed())
                 .toList();
 
