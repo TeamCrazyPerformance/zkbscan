@@ -5,6 +5,8 @@ import com.tcp.zkbscan.back.dto.PageInfoDTO;
 import com.tcp.zkbscan.back.dto.token.TokenTransferDTO;
 import com.tcp.zkbscan.back.entity.L2Transaction;
 import com.tcp.zkbscan.back.service.L2TransactionService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,12 +18,14 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 
+@Tag(name = "Token", description = "토큰")
 @RestController
 @RequiredArgsConstructor
 public class TokenController {
 
     private final L2TransactionService l2TransactionService;
 
+    @Operation(summary = "토큰 Transfer 정보 조회", description = "토큰 이동과 관련된 정보를 조회합니다.")
     @GetMapping("/token/transfer")
     private PageDTO<List<TokenTransferDTO>> getTokenTransfer(@Positive @RequestParam int page,
                                                              @Positive @RequestParam int size) {
