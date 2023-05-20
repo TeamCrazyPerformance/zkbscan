@@ -14,7 +14,6 @@ interface SearchValue {
   setSearchValue: (searchValue: string) => void;
 }
 interface ArticlState {
-  //   data: [{ [key: string]: string }];
   currentPage: number;
   totalPages: number;
   pageSize: number;
@@ -74,6 +73,16 @@ export const useArticleState = create<ArticlState>()(
             txnfee: "1",
           },
         ],
+        showBlockPage: async () => {
+          try {
+            const { currentPage, pageSize } = useArticleState.getState();
+            const data = await resultData.FetchL2Block(currentPage, pageSize);
+            return data;
+          } catch (error) {
+            console.error("An error occurred while fetching data:", error);
+            return [];
+          }
+        },
         nextBlockPage: async () => {
           try {
             const { currentPage, pageSize } = useArticleState.getState();
@@ -92,6 +101,19 @@ export const useArticleState = create<ArticlState>()(
             const { currentPage, pageSize } = useArticleState.getState();
             const data = await resultData.FetchL2Block(
               currentPage - 1,
+              pageSize
+            );
+            return data;
+          } catch (error) {
+            console.error("An error occurred while fetching data:", error);
+            return [];
+          }
+        },
+        showTransPage: async () => {
+          try {
+            const { currentPage, pageSize } = useArticleState.getState();
+            const data = await resultData.FetchL2Transactions(
+              currentPage,
               pageSize
             );
             return data;
