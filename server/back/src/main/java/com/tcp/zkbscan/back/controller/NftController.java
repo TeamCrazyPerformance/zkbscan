@@ -5,10 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tcp.zkbscan.back.dto.PageDTO;
 import com.tcp.zkbscan.back.dto.PageInfoDTO;
-import com.tcp.zkbscan.back.dto.nft.NftMetadata;
-import com.tcp.zkbscan.back.dto.nft.NftMintDTO;
-import com.tcp.zkbscan.back.dto.nft.NftMintInfo;
-import com.tcp.zkbscan.back.dto.nft.NftTransferDTO;
+import com.tcp.zkbscan.back.dto.nft.*;
 import com.tcp.zkbscan.back.entity.L2Transaction;
 import com.tcp.zkbscan.back.service.L2TransactionService;
 import jakarta.validation.constraints.Positive;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +74,33 @@ public class NftController {
                 throw new RuntimeException(e);
             }
         }).toList(), pageInfoDTO);
+    }
+
+    @GetMapping("/nft/trade")
+    private PageDTO<List<NftTradeDTO>> getNftTrade(@Positive @RequestParam int page,
+                                                   @Positive @RequestParam int size) {
+        List<BigInteger> types = new ArrayList<>();
+        types.add(BigInteger.valueOf(9));
+        List<L2Transaction> transactions = l2TransactionService.getTransactionByTypes(types);
+
+        final int start = (page - 1) * size;
+        final int end = Math.min((start + size), transactions.size());
+        PageInfoDTO pageInfoDTO = new PageInfoDTO(page, size, transactions.size(), (int) Math.ceil((double) transactions.size() / size));
+
+        return new PageDTO<>(transactions.subList(start, end).stream().map(i -> {
+                    try {
+                        return NftTradeDTO.builder()
+                                .txid(i.getHash())
+                                .timestamp(i.getCreatedAt())
+                                .side("buy")
+                                .price(new BigDecimal(objectMapper.readValue(i.getInfo(), NftTradeInfo.class).getBuyChannelAmount(), 18))
+                                .nftIndex(i.getNftIndex())
+                                .build();
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+        ).toList(), pageInfoDTO);
     }
 
     private String convertType(BigInteger type) {
