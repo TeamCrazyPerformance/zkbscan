@@ -3,14 +3,8 @@ package com.tcp.zkbscan.back.component;
 import com.tcp.zkbscan.back.dto.zkbnb.BlockResponse;
 import com.tcp.zkbscan.back.dto.zkbnb.CurrentHeightResponse;
 import com.tcp.zkbscan.back.dto.zkbnb.Transaction;
-import com.tcp.zkbscan.back.entity.L1Block;
-import com.tcp.zkbscan.back.entity.L1Transaction;
-import com.tcp.zkbscan.back.entity.L2Block;
-import com.tcp.zkbscan.back.entity.L2Transaction;
-import com.tcp.zkbscan.back.service.L1BlockService;
-import com.tcp.zkbscan.back.service.L1TransactionService;
-import com.tcp.zkbscan.back.service.L2BlockService;
-import com.tcp.zkbscan.back.service.L2TransactionService;
+import com.tcp.zkbscan.back.entity.*;
+import com.tcp.zkbscan.back.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +17,7 @@ import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.EthBlock;
+import org.web3j.protocol.core.methods.response.Log;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 
 import java.io.IOException;
@@ -38,6 +33,7 @@ public class Scheduler {
     private final Web3j bscL1Rpc;
     private final L1BlockService l1BlockService;
     private final L1TransactionService l1TransactionService;
+    private final L1TransactionLogService l1TransactionLogService;
     private final L2BlockService l2BlockService;
     private final L2TransactionService l2TransactionService;
     private final RestTemplate restTemplate;
@@ -243,6 +239,15 @@ public class Scheduler {
                     TransactionReceipt receipt = optional.get();
                     tx.setStatus(receipt.getStatus());
                     l1TransactionService.saveTransaction(tx);
+
+                    List<Log> logs = receipt.getLogs();
+                    for(Log l : logs) {
+                        for(String t : l.getTopics()) {
+                            L1TransactionLog txLog = new L1TransactionLog(tx, l.getLogIndex(), t);
+                            l1TransactionLogService.saveTransactionLog(txLog);
+                        }
+                    }
+
                     log.info("[L1] Get transaction receipt : {}", tx.getHash());
                 }
             } catch (Exception e) {

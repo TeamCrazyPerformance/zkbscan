@@ -10,6 +10,7 @@ import com.tcp.zkbscan.back.entity.L2Transaction;
 import com.tcp.zkbscan.back.service.DepositService;
 import com.tcp.zkbscan.back.service.L1TransactionService;
 import com.tcp.zkbscan.back.service.L2TransactionService;
+import com.tcp.zkbscan.back.service.WithdrawalService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Positive;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Tag(name = "Transaction", description = "트랜젝션 정보")
 @RestController
@@ -33,6 +33,7 @@ public class TransactionController {
     private final L1TransactionService l1TransactionService;
     private final L2TransactionService l2TransactionService;
     private final DepositService depositService;
+    private final WithdrawalService withdrawalService;
 
     @Operation(summary = "L1 트랜젝션 단건 조회", description = "TXID로 L1 트랜젝션 데이터를 조회합니다.")
     @GetMapping("/tx/l1/{txid}")
@@ -65,7 +66,13 @@ public class TransactionController {
 
     @Operation(summary = "Deposit 트랜젝션 조회", description = "L1에서 L2로 Deposit된 트랜젝션 데이터를 조회합니다.")
     @GetMapping("/tx/deposit")
-    public List<DepositTransactionDTO> getL2BlockByNumber() {
+    public List<DepositTransactionDTO> getDepositTransaction() {
         return depositService.getDeposits();
+    }
+
+    @Operation(summary = "Withdrawal 트랜젝션 조회", description = "L2에서 L1로 Withdrawal된 트랜젝션 데이터를 조회합니다.")
+    @GetMapping("/tx/withdrawal")
+    public List<DepositTransactionDTO> getWithdrawalTransaction() {
+        return withdrawalService.getWithdrawals();
     }
 }
