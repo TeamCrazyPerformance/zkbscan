@@ -7,15 +7,18 @@ import {
   CDBSidebarMenuItem,
 } from "cdbreact";
 import styles from "./Sidebar.module.css";
+import { usePageState } from "../../store/store";
 
 type ComponentProps = {
   itemList: {
+    id: number;
     name: string;
     key: string;
   }[];
 };
 
 export default function Navbar({ itemList }: ComponentProps) {
+  const setId = usePageState((state) => state.setId);
   return (
     <div className={styles.SideBarContainer}>
       <CDBSidebar
@@ -33,7 +36,14 @@ export default function Navbar({ itemList }: ComponentProps) {
             {itemList.map((item) => (
               <div key={item.key} className={styles.SideBarItem}>
                 <CDBSidebarMenuItem>
-                  <Link to={`${item.key}`}>{item.name}</Link>
+                  <Link
+                    to={`${item.key}`}
+                    onClick={() => {
+                      setId(item.id);
+                    }}
+                  >
+                    {item.name}
+                  </Link>
                 </CDBSidebarMenuItem>
               </div>
             ))}

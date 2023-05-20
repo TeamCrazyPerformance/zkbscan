@@ -3,6 +3,7 @@ import { devtools, persist } from "zustand/middleware";
 import * as resultData from "../api/placeSuggestion";
 
 interface NavListItem {
+  id: number;
   name: string;
   key: string;
 }
@@ -13,6 +14,12 @@ interface SearchValue {
   searchValue: string;
   setSearchValue: (searchValue: string) => void;
 }
+
+interface PageState {
+  id: number;
+  setId: (id: number) => void;
+}
+
 interface ArticlState {
   currentPage: number;
   totalPages: number;
@@ -38,22 +45,17 @@ export const useNavStore = create<AppState>()(
     persist(
       (set) => ({
         navList: [
-          { name: "home", key: "/" },
-          { name: "Transactions", key: "trans" },
-          { name: "L1 -> L2 Transactions", key: "l1l2trans" },
-          { name: "L2 -> L1 Transactions", key: "l2l1trans" },
-          { name: "L1 Transactions batches", key: "l1tb" },
-          { name: "View L1 state batches", key: "vl1sb" },
-          { name: "L2 Transactions", key: "l2t" },
-          { name: "L2 Transactions batches", key: "l2tb" },
-          { name: "View L2 state batches", key: "vl2sb" },
-          { name: "ERC 20 top tokens", key: "e2tt" },
-          { name: "ERC 20 transfer", key: "e2t" },
-          { name: "ERC 721 top tokens", key: "e7tt" },
-          { name: "ERC 721 transfer", key: "e7t" },
-          { name: "ERC 1155 top tokens", key: "e1tt" },
-          { name: "ERC 1155 transfer", key: "e1t" },
-          { name: "Daily transaction chart", key: "dtc" },
+          { id: 0, name: "home", key: "/" },
+          { id: 1, name: "Transactions", key: "trans" },
+          { id: 2, name: "L1 -> L2 Transactions", key: "l1l2trans" },
+          { id: 3, name: "L2 -> L1 Transactions", key: "l2l1trans" },
+          { id: 4, name: "L2 Transactions", key: "l2t" },
+          { id: 5, name: "ERC 20 top tokens", key: "e2tt" },
+          { id: 6, name: "ERC 20 transfer", key: "e2t" },
+          { id: 7, name: "NFT top tokens", key: "NFTTT" },
+          { id: 8, name: "NFT transfer", key: "NFTT" },
+          { id: 9, name: "Daily transaction chart", key: "dtc" },
+          { id: 10, name: "TVL chart", key: "dtc" },
         ],
       }),
       {
@@ -62,118 +64,7 @@ export const useNavStore = create<AppState>()(
     )
   )
 );
-export const useArticleState = create<ArticlState>()(
-  devtools(
-    persist(
-      (set) => ({
-        currentPage: 0,
-        totalPages: 0,
-        pageSize: 25,
-        data: [
-          {
-            hash: "1",
-            block: "1",
-            age: "1",
-            from: "1",
-            to: "1",
-            confirmBy: "1",
-            value: "1",
-            txnfee: "1",
-          },
-        ],
-        setPage: (page: number) => set({ currentPage: page }),
-        setPageSize: (pageSize: number) => set({ pageSize }),
-        setTotalPage: (totalPages: number) => set({ totalPages }),
-        showBlockPage: async () => {
-          try {
-            const { currentPage, pageSize } = useArticleState.getState();
-            const data = await resultData.FetchL2Block(currentPage, pageSize);
-            return data;
-          } catch (error) {
-            console.error("An error occurred while fetching data:", error);
-            return [];
-          }
-        },
-        nextBlockPage: async () => {
-          try {
-            const { currentPage, pageSize } = useArticleState.getState();
-            const data = await resultData.FetchL2Block(
-              currentPage + 1,
-              pageSize
-            );
-            return data;
-          } catch (error) {
-            console.error("An error occurred while fetching data:", error);
-            return [];
-          }
-        },
-        prevBlockPage: async () => {
-          try {
-            const { currentPage, pageSize } = useArticleState.getState();
-            const data = await resultData.FetchL2Block(
-              currentPage - 1,
-              pageSize
-            );
-            return data;
-          } catch (error) {
-            console.error("An error occurred while fetching data:", error);
-            return [];
-          }
-        },
-        showTransPage: async () => {
-          try {
-            const { currentPage, pageSize } = useArticleState.getState();
-            const data = await resultData.FetchL2Transactions(
-              currentPage,
-              pageSize
-            );
-            return data;
-          } catch (error) {
-            console.error("An error occurred while fetching data:", error);
-            return [];
-          }
-        },
-        nextTransPage: async () => {
-          try {
-            const { currentPage, pageSize } = useArticleState.getState();
-            const data = await resultData.FetchL2Transactions(
-              currentPage + 1,
-              pageSize
-            );
-            return data;
-          } catch (error) {
-            console.error("An error occurred while fetching data:", error);
-            return [];
-          }
-        },
-        prevTransPage: async () => {
-          try {
-            const { currentPage, pageSize } = useArticleState.getState();
-            const data = await resultData.FetchL2Block(
-              currentPage - 1,
-              pageSize
-            );
-            return data;
-          } catch (error) {
-            console.error("An error occurred while fetching data:", error);
-            return [];
-          }
-        },
-        goToNewestPage: () => {
-          set((state) => {
-            return { currentPage: state.totalPages - 1 };
-          });
-        },
-        goToOldestPage: () => {
-          set({ currentPage: 0 });
-        },
-      }),
-      {
-        name: "ArticlState",
-      }
-    )
-  )
-);
+
 export const useSearchValue = create<SearchValue & AppActions>()(
   devtools(
     persist(
@@ -199,6 +90,20 @@ export const useSearchValue = create<SearchValue & AppActions>()(
 
       {
         name: "searchValue",
+      }
+    )
+  )
+);
+
+export const usePageState = create<PageState>()(
+  devtools(
+    persist(
+      (set) => ({
+        id: 0,
+        setId: (id: number) => set((state) => ({ ...state, id: id })),
+      }),
+      {
+        name: "id",
       }
     )
   )

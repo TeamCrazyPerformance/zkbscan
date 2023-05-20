@@ -2,7 +2,6 @@ import { useSearchValue } from "../../store/store";
 import style from "./Header.module.css";
 
 function Header() {
-  const value = useSearchValue((state) => state.searchValue);
   const setSearchValue = useSearchValue((state) => state.setSearchValue);
   return (
     <div className={style.Container}>
