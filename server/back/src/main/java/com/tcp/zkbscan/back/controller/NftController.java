@@ -8,6 +8,8 @@ import com.tcp.zkbscan.back.dto.PageInfoDTO;
 import com.tcp.zkbscan.back.dto.nft.*;
 import com.tcp.zkbscan.back.entity.L2Transaction;
 import com.tcp.zkbscan.back.service.L2TransactionService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+@Tag(name = "NFT", description = "NFT")
 @RestController
 @RequiredArgsConstructor
 public class NftController {
@@ -26,6 +29,7 @@ public class NftController {
     private final L2TransactionService l2TransactionService;
     private final ObjectMapper objectMapper;
 
+    @Operation(summary = "NFT Transfer 정보 조회", description = "NFT 이동과 관련된 정보를 조회합니다.")
     @GetMapping("/nft/transfer")
     private PageDTO<List<NftTransferDTO>> getNftTransfer(@Positive @RequestParam int page,
                                                          @Positive @RequestParam int size) {
@@ -49,6 +53,7 @@ public class NftController {
                 .build()).toList(), pageInfoDTO);
     }
 
+    @Operation(summary = "NFT 민팅 정보 조회", description = "NFT 발행과 관련된 정보를 조회합니다.")
     @GetMapping("/nft/mint")
     private PageDTO<List<NftMintDTO>> getNftMint(@Positive @RequestParam int page,
                                                  @Positive @RequestParam int size) {
@@ -76,6 +81,7 @@ public class NftController {
         }).toList(), pageInfoDTO);
     }
 
+    @Operation(summary = "NFT 거래 정보 조회", description = "NFT 거래와 관련된 정보를 조회합니다.")
     @GetMapping("/nft/trade")
     private PageDTO<List<NftTradeDTO>> getNftTrade(@Positive @RequestParam int page,
                                                    @Positive @RequestParam int size) {
