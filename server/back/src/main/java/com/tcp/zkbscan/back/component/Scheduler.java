@@ -102,32 +102,34 @@ public class Scheduler {
                     log.info("[L1] Block Saved : {}", targetBlockNumber);
 
                     // Transaction
-                    for (EthBlock.TransactionResult txr : newBlock.getTransactions()) {
-                        EthBlock.TransactionObject tx = (EthBlock.TransactionObject) txr.get();
+                    if(newBlock.getTransactions() != null) {
+                        for (EthBlock.TransactionResult txr : newBlock.getTransactions()) {
+                            EthBlock.TransactionObject tx = (EthBlock.TransactionObject) txr.get();
 
-                        if(!l1ContractAddress.equals(tx.getTo()))
-                            continue;
+                            if (!l1ContractAddress.equals(tx.getTo()))
+                                continue;
 
-                        L1Transaction l1Transaction = L1Transaction.builder()
-                                .blockHash(tx.getBlockHash())
-                                .block(l1Block)
-                                .from(tx.getFrom())
-                                .gas(tx.getGas())
-                                .gasPrice(tx.getGasPrice())
-                                .hash(tx.getHash())
-                                .input(tx.getInput())
-                                .nonce(tx.getNonce())
-                                .to(tx.getTo())
-                                .transactionIndex(tx.getTransactionIndex())
-                                .value(tx.getValue())
-                                .type(tx.getType())
-                                .v(tx.getV())
-                                .r(tx.getR())
-                                .s(tx.getS())
-                                .build();
+                            L1Transaction l1Transaction = L1Transaction.builder()
+                                    .blockHash(tx.getBlockHash())
+                                    .block(l1Block)
+                                    .from(tx.getFrom())
+                                    .gas(tx.getGas())
+                                    .gasPrice(tx.getGasPrice())
+                                    .hash(tx.getHash())
+                                    .input(tx.getInput())
+                                    .nonce(tx.getNonce())
+                                    .to(tx.getTo())
+                                    .transactionIndex(tx.getTransactionIndex())
+                                    .value(tx.getValue())
+                                    .type(tx.getType())
+                                    .v(tx.getV())
+                                    .r(tx.getR())
+                                    .s(tx.getS())
+                                    .build();
 
-                        l1TransactionService.saveTransaction(l1Transaction);
-                        log.info("[L1] Transaction Saved : {}", l1Transaction.getHash());
+                            l1TransactionService.saveTransaction(l1Transaction);
+                            log.info("[L1] Transaction Saved : {}", l1Transaction.getHash());
+                        }
                     }
 
                     targetBlockNumber = targetBlockNumber.add(BigInteger.ONE);
@@ -185,37 +187,39 @@ public class Scheduler {
                 log.info("[L2] Block Saved : {}", targetBlock.getHeight());
 
                 // Transaction
-                for (Transaction tx : targetBlock.getTxs()) {
-                    L2Transaction l2Transaction = L2Transaction.builder()
-                            .hash(tx.getHash())
-                            .type(tx.getType())
-                            .amount(tx.getAmount())
-                            .info(tx.getInfo())
-                            .status(tx.getStatus())
-                            .index(tx.getIndex())
-                            .gasFeeAssetId(tx.getGas_fee_asset_id())
-                            .gasFee(tx.getGas_fee())
-                            .nftIndex(tx.getNft_index())
-                            .collectionId(tx.getCollection_id())
-                            .assetId(tx.getAsset_id())
-                            .assetName(tx.getAsset_name())
-                            .nativeAddress(tx.getNative_address())
-                            .extraInfo(tx.getExtra_info())
-                            .memo(tx.getMemo())
-                            .accountIndex(tx.getAccount_index())
-                            .l1Address(tx.getL1_address())
-                            .nonce(tx.getNonce())
-                            .expireAt(tx.getExpire_at())
-                            .block(l2Block)
-                            .createdAt(tx.getCreated_at())
-                            .verifyAt(tx.getVerify_at())
-                            .stateRoot(tx.getState_root())
-                            .toAccountIndex(tx.getTo_account_index())
-                            .toL1Address(tx.getTo_l1_address())
-                            .build();
+                if(targetBlock.getTxs() != null) {
+                    for (Transaction tx : targetBlock.getTxs()) {
+                        L2Transaction l2Transaction = L2Transaction.builder()
+                                .hash(tx.getHash())
+                                .type(tx.getType())
+                                .amount(tx.getAmount())
+                                .info(tx.getInfo())
+                                .status(tx.getStatus())
+                                .index(tx.getIndex())
+                                .gasFeeAssetId(tx.getGas_fee_asset_id())
+                                .gasFee(tx.getGas_fee())
+                                .nftIndex(tx.getNft_index())
+                                .collectionId(tx.getCollection_id())
+                                .assetId(tx.getAsset_id())
+                                .assetName(tx.getAsset_name())
+                                .nativeAddress(tx.getNative_address())
+                                .extraInfo(tx.getExtra_info())
+                                .memo(tx.getMemo())
+                                .accountIndex(tx.getAccount_index())
+                                .l1Address(tx.getL1_address())
+                                .nonce(tx.getNonce())
+                                .expireAt(tx.getExpire_at())
+                                .block(l2Block)
+                                .createdAt(tx.getCreated_at())
+                                .verifyAt(tx.getVerify_at())
+                                .stateRoot(tx.getState_root())
+                                .toAccountIndex(tx.getTo_account_index())
+                                .toL1Address(tx.getTo_l1_address())
+                                .build();
 
-                    l2TransactionService.saveTransaction(l2Transaction);
-                    log.info("[L2] Transaction Saved : {}", l2Transaction.getHash());
+                        l2TransactionService.saveTransaction(l2Transaction);
+                        log.info("[L2] Transaction Saved : {}", l2Transaction.getHash());
+                    }
                 }
 
                 targetBlockNumber = targetBlockNumber.add(BigInteger.ONE);
