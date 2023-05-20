@@ -2,8 +2,10 @@ package com.tcp.zkbscan.back.controller;
 
 import com.tcp.zkbscan.back.dto.PageDTO;
 import com.tcp.zkbscan.back.dto.PageInfoDTO;
+import com.tcp.zkbscan.back.dto.account.AccountDTO;
 import com.tcp.zkbscan.back.dto.transaction.L2TransactionDTO;
 import com.tcp.zkbscan.back.entity.L2Transaction;
+import com.tcp.zkbscan.back.service.AccountService;
 import com.tcp.zkbscan.back.service.L2TransactionService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Positive;
@@ -22,7 +24,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AccountController {
 
+    private final AccountService accountService;
     private final L2TransactionService l2TransactionService;
+
+    @GetMapping("/account/{address}")
+    public AccountDTO getAccountDetail(@PathVariable("address") String address) {
+        return accountService.getAccountDetail(address);
+    }
 
     @GetMapping("/account/{address}/transaction")
     public PageDTO<List<L2TransactionDTO>> getTransactionByAddress(@PathVariable("address") String address,
