@@ -31,9 +31,13 @@ export default function Navbar({ itemList }: ComponentProps) {
         minWidth={""}
         maxWidth={"300px"}
       >
-        <CDBSidebarHeader>Navbar</CDBSidebarHeader>
+        <CDBSidebarHeader>
+          {" "}
+          BNBSCAN
+          {/* <img width="51" height="51" src={"../../logo.png"} alt="Logo" /> */}
+        </CDBSidebarHeader>
         <CDBSidebarContent>
-          <CDBSidebarMenu>
+          <CDBSidebarMenu className={styles.SideBarContainer}>
             {itemList.map((item) => (
               <div key={item.key} className={styles.SideBarItem}>
                 <CDBSidebarMenuItem>

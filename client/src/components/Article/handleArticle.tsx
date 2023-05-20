@@ -6,7 +6,20 @@ import {
 import { usePage, usePageState } from "../../store/store";
 import { l1l2trans, l2trans } from "../../type";
 import style from "./table.module.css";
+import LineChart from "../chart/chart";
 
+interface Data {
+  bnbPrice: number;
+  latestL1BlockNumber: number;
+  latestl2BlockNumber: number;
+  tvl: number;
+  totalTransactionCount: number;
+}
+interface Stat {
+  date: string;
+  transactionCount: number;
+  price: number;
+}
 // { id: 0, name: "home", key: "/" },
 // { id: 1, name: "Transactions", key: "trans" },
 // { id: 2, name: "L1 -> L2 Transactions", key: "l1l2trans" },
@@ -20,9 +33,83 @@ import style from "./table.module.css";
 // { id: 10, name: "TVL chart", key: "dtc" }
 
 function Home() {
-  return <></>;
-}
+  let [data, setData] = useState<Data>({
+    bnbPrice: 0,
+    latestL1BlockNumber: 0,
+    latestl2BlockNumber: 0,
+    tvl: 0,
+    totalTransactionCount: 0,
+  });
+  let [stat, setStat] = useState<Stat>({
+    date: "1",
+    transactionCount: 0,
+    price: 0,
+  });
+  useEffect(() => {
+    fetch("http://172.16.41.132:8080/statistics")
+      .then((response) => response.json())
+      .then((data) => {
+        // Process the received data
+        // Example: Set the received data to the component's state
+        setData(data);
+      })
+      .catch((error) => {
+        // Handle errors if necessary
+        console.error("Error fetching data:", error);
+      });
+    fetch("http://172.16.41.132:8080/statistics/chart")
+      .then((response) => response.json())
+      .then((data) => {
+        // Process the received data
+        // Example: Set the received data to the component's state
+        setData(data);
+      })
+      .catch((error) => {
+        // Handle errors if necessary
+        console.error("Error fetching data:", error);
+      });
+  }, []);
 
+  return (
+    <div className={style.flex}>
+      {/* <div>
+        <img src="../../bnb.svg" alt="bnb" />
+      </div> */}
+
+      <div className={style.wrap}>
+        <div>
+          <div>BNB PRICE</div>
+          <div>${data.bnbPrice}</div>
+        </div>
+        <div>
+          <div>TLV</div>
+          <div>${data.tvl}</div>
+        </div>
+      </div>
+      <div className={style.wrap}>
+        <div>
+          <div>latestL1BlockNumber</div>
+          <div>{data.latestL1BlockNumber}</div>
+        </div>
+
+        <div className={style.wrap}>
+          <div>
+            <div>latestl2BlockNumber</div>
+            <div>{data.latestl2BlockNumber}</div>
+          </div>
+        </div>
+      </div>
+
+      <div className={style.wrap}>
+        <div>
+          <div>totalTransactionCount</div>
+          <div>{data.totalTransactionCount}</div>
+        </div>
+      </div>
+      <LineChart />
+    </div>
+  );
+}
 function L2Transactions({ page }: { page: number }) {
   const [res, setRes] = useState();
   useEffect(() => {
@@ -35,7 +122,7 @@ function L2Transactions({ page }: { page: number }) {
     data = res;
     console.log(data);
     return (
-      <table className={}>
+      <table className={style.good}>
         <tr key={"header"}>
           {Object.keys(data.data[0]).map((key) => (
             <th key={key}>{key}</th>
@@ -129,8 +216,8 @@ function UsePage() {
   if (id == 6) return <NFTTopToken />;
   if (id == 7) return <NFTTransfer />;
   if (id == 8) return <DailyTransactionChart />;
-  if (id == 9) return <TVLChart />;
-  return <ERROR></ERROR>;
+  // if (id == 9) return <TVLChart />;
+  return <></>;
 }
 
 export default UsePage;

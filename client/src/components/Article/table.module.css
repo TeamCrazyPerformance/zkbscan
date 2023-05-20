@@ -1,0 +1,12 @@
+.wrap {
+  display: flex;
+  color: black;
+  justify-content: first baseline;
+  flex-direction: column;
+}
+.flex {
+  display: flex;
+}
+.flex div {
+  padding: 10px;
+}
