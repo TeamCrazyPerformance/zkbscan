@@ -6,9 +6,16 @@
 .SideBarContainer {
   position: fixed;
   width: 300px;
-  overflow-y: scroll;
   top: 0;
   bottom: 0;
   border-radius: 0 20px 20px 0;
   overflow-y: hidden;
+}
+
+.SideBarContainer::-webkit-scrollbar {
+  display: none;
+}
+.SideBarContainer {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
 }
