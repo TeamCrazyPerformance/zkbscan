@@ -45,8 +45,11 @@ export const FetchL2BlockHeight = async () => {
   return res;
 };
 
-export const FetchL2Transactions = async () => {
-  const url = `http://172.16.41.132:8080/tx/l2?page=3&size=3`;
+export const FetchL2Transactions = async (
+  page: number,
+  size: number
+): Promise<any> => {
+  const url = `http://172.16.41.132:8080/tx/l2?page=${page}&size=${size}`;
   const res = await (
     await fetch(url, {
       method: "GET",

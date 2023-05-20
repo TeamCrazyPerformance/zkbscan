@@ -100,32 +100,33 @@ export const useArticleState = create<ArticlState>()(
             return [];
           }
         },
+        nextTransPage: async () => {
+          try {
+            const { currentPage, pageSize } = useArticleState.getState();
+            const data = await resultData.FetchL2Transactions(
+              currentPage + 1,
+              pageSize
+            );
+            return data;
+          } catch (error) {
+            console.error("An error occurred while fetching data:", error);
+            return [];
+          }
+        },
+        prevTransPage: async () => {
+          try {
+            const { currentPage, pageSize } = useArticleState.getState();
+            const data = await resultData.FetchL2Block(
+              currentPage - 1,
+              pageSize
+            );
+            return data;
+          } catch (error) {
+            console.error("An error occurred while fetching data:", error);
+            return [];
+          }
+        },
         setPage: (page: number) => set({ currentPage: page }),
-
-        // goToPage: (pageIndex: number) => {
-        //   set({ currentPage: pageIndex });
-        // },
-        // goToNextPage: () => {
-        //   set(async (state) => {
-        //     const nextPageIndex = state.currentPage + 1;
-        //     const result = await data.FetchL2Block(
-        //       nextPageIndex,
-        //       state.pageSize
-        //     );
-        //     return {
-        //       ...state,
-        //       data: result.data,
-        //       currentPage: nextPageIndex,
-        //       totalPages: result.data.totalPages,
-        //     };
-        //   });
-        // },
-        // PrevPage: () => {
-        //   set((state) => {
-        //     const previousPageIndex = state.currentPage - 1;
-        //     return { currentPage: previousPageIndex };
-        //   });
-        // },
         goToNewestPage: () => {
           set((state) => {
             return { currentPage: state.totalPages - 1 };
