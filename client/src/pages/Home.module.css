@@ -1,0 +1,7 @@
+.ContentContainer {
+  margin-left: 300px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}

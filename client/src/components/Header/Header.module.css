@@ -1,0 +1,21 @@
+.Container {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  padding-bottom: 0;
+  flex: 2;
+}
+
+.Input-text:focus {
+  box-shadow: 0px 0px 0px;
+  border-color: #f8c146;
+  outline: 0px;
+}
+
+.Form-control {
+  border: 1px solid #f8c146;
+}
+
+.Space {
+  width: 5px;
+}
