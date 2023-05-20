@@ -28,13 +28,14 @@ import Navbar from "./template/sidebar/nav";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
+  let data={mu:'mu'}
   const itemList = [
     { name: "home", key: "/", element: <Home /> },
     { name: "Transactions", key: "trans", element: <Trans /> },
     { name: "L1 -> L2 Transactions", key: "l1l2trans", element: <L1L2Trans /> },
-    { name: "L2 -> L1 Transactions", key: "l2l1trans", element: <L2L1Trans /> },
-    { name: "Contract internal transactions", key: "cit", element: <Cit /> },
-    { name: "L1 Transactions batches", key: "l1tb", element: <L1TB /> },
+    { name: "L2 -> L1 Transactions", key: "l2l1trans", element: <L2L1Trans data={data}/> },
+    { name: "Contract internal transactions", key: "cit", element: <Cit data={data}/> },
+    { name: "L1 Transactions batches", key: "l1tb", element: <L1TB data={data}/> },
     { name: "View L1 state batches", key: "vl1sb", element: <VL1SB /> },
     { name: "L2 Transactions", key: "l2t", element: <L2T /> },
     { name: "L2 Transactions batches", key: "l2tb", element: <L2TB /> },
