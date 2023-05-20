@@ -45,11 +45,6 @@ public class DepositService {
                 .sorted(Comparator.comparing(L2TransactionDTO::getBlockHeight).reversed())
                 .toList();
 
-        log.info(l1DepositsByDepositBNB.toString());
-        log.info(l2DepositsByDepositBNB.toString());
-
-        log.info("{} {}", l1DepositsByDepositBNB.size(), l2DepositsByDepositBNB.size());
-
         List<DepositTransactionDTO> result = new ArrayList<>();
         for(int i = 0; i < l1DepositsByDepositBNB.size(); i++) {
             L1TransactionDTO l1TransactionDTO = l1DepositsByDepositBNB.get(i);
