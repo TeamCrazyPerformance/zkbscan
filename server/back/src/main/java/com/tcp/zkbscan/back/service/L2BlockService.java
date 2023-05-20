@@ -20,6 +20,10 @@ public class L2BlockService {
         return l2BlockRepository.findFirstByOrderByHeightDesc();
     }
 
+    public L2Block getLatestBlockVerifiedAndExecuted() {
+        return l2BlockRepository.findFirstByStatusOrderByHeightDesc(BigInteger.valueOf(5));
+    }
+
     public void saveBlock(L2Block l2Block) {
         l2BlockRepository.save(l2Block);
     }
