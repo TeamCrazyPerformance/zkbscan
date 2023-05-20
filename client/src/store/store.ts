@@ -75,6 +75,9 @@ export const useArticleState = create<ArticlState>()(
         ],
         setPage: (page: number) => set({ currentPage: page }),
         setPageSize: (pagesize: number) => set({ pageSize: pagesize }),
+        setTotalPages: (totalPages: number) => {
+          set({ totalPages });
+        },
         showBlockPage: async () => {
           try {
             const { currentPage, pageSize } = useArticleState.getState();
@@ -157,9 +160,6 @@ export const useArticleState = create<ArticlState>()(
         },
         goToOldestPage: () => {
           set({ currentPage: 0 });
-        },
-        setTotalPages: (totalPages: number) => {
-          set({ totalPages });
         },
       }),
       {
