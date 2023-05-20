@@ -18,7 +18,7 @@ public class L1Transaction {
 
     private String blockHash;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "blockNumber", referencedColumnName = "number", nullable = false)
     private L1Block block;
 

@@ -38,7 +38,7 @@ public class L2Transaction {
     private BigInteger nonce;
     private BigInteger expireAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "blockHeight", referencedColumnName = "height", nullable = false)
     private L2Block block;
 
