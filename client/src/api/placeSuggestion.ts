@@ -1,14 +1,6 @@
-export const FetchL1Block = async () => {
-  const url = `http://172.16.41.132:8080/block`;
-  const res = await (
-    await fetch(url, {
-      method: "GET",
-    })
-  ).json();
-
-  return res;
-};
-
+/*
+ *   Blbok
+ */
 export const FetchL2Block = async (
   page: number,
   size: number
@@ -23,8 +15,8 @@ export const FetchL2Block = async (
   return res;
 };
 
-export const FetchL1BlockHeight = async () => {
-  const url = `http://172.16.41.132:8080/block/l1/2131`;
+export const FetchL2BlockHeight = async (param: number) => {
+  const url = `http://172.16.41.132:8080/block/l2/${param}`;
   const res = await (
     await fetch(url, {
       method: "GET",
@@ -34,8 +26,8 @@ export const FetchL1BlockHeight = async () => {
   return res;
 };
 
-export const FetchL2BlockHeight = async () => {
-  const url = `http://172.16.41.132:8080/block/l2/1`;
+export const FetchL1BlockHeight = async (param: number) => {
+  const url = `http://172.16.41.132:8080/block/l1/${param}`;
   const res = await (
     await fetch(url, {
       method: "GET",
@@ -59,8 +51,11 @@ export const FetchL2Transactions = async (
   return res;
 };
 
-export const FetchL2TransactionTxid = async () => {
-  const url = `http://172.16.41.132:8080/tx/l2/q`;
+/*
+ *   Transaction
+ */
+export const FetchL2TransactionTxid = async (param: string) => {
+  const url = `http://172.16.41.132:8080/tx/l2/${param}`;
   const res = await (
     await fetch(url, {
       method: "GET",
@@ -70,8 +65,8 @@ export const FetchL2TransactionTxid = async () => {
   return res;
 };
 
-export const FetchL1TransactionTxid = async () => {
-  const url = `http://172.16.41.132:8080/tx/l1/213`;
+export const FetchL1TransactionTxid = async (param: string) => {
+  const url = `http://172.16.41.132:8080/tx/l1/${param}`;
   const res = await (
     await fetch(url, {
       method: "GET",
@@ -81,8 +76,45 @@ export const FetchL1TransactionTxid = async () => {
   return res;
 };
 
-export const FetchDepositTransaction = async () => {
-  const url = `http://172.16.41.132:8080/tx/deposit`;
+export const FetchDepositTransaction = async (
+  page: number,
+  size: number
+): Promise<any> => {
+  const url = `http://172.16.41.132:8080/tx/deposit?page=${page}&size=${size}`;
+  const res = await (
+    await fetch(url, {
+      method: "GET",
+    })
+  ).json();
+
+  return res;
+};
+
+/*
+ *   Statistics
+ */
+export const FetchStatistics = async () => {
+  const url = `http://172.16.41.132:8080/statistics`;
+  const res = await (
+    await fetch(url, {
+      method: "GET",
+    })
+  ).json();
+
+  return res;
+};
+export const FetchTVL = async () => {
+  const url = `http://172.16.41.132:8080/statistics/tvl`;
+  const res = await (
+    await fetch(url, {
+      method: "GET",
+    })
+  ).json();
+
+  return res;
+};
+export const FetchTransactionChart = async () => {
+  const url = `http://172.16.41.132:8080/statistics/chart`;
   const res = await (
     await fetch(url, {
       method: "GET",
