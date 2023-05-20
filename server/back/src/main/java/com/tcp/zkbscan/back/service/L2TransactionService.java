@@ -54,4 +54,8 @@ public class L2TransactionService {
         return l2TransactionRepository.findAll(spec);
     }
 
+    public Long getTotalTransactionCount() {
+        return l2TransactionRepository.countBy();
+    }
+
 }

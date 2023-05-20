@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface L2TransactionRepository extends JpaRepository<L2Transaction, String>, JpaSpecificationExecutor<L2Transaction> {
 
     Page<L2Transaction> findAllByOrderByCreatedAtDesc(Pageable pageable);
-
+    Long countBy();
 }
 

@@ -12,4 +12,5 @@ public class BasicStatistics {
     private BigInteger latestL1BlockNumber;
     private BigInteger latestl2BlockNumber;
     private BigDecimal tvl;
+    private Long totalTransactionCount;
 }

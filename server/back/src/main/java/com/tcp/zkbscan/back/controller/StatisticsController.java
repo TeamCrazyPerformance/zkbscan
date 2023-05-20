@@ -5,6 +5,7 @@ import com.tcp.zkbscan.back.dto.statistics.TVLResponseDTO;
 import com.tcp.zkbscan.back.dto.statistics.TransactionChart;
 import com.tcp.zkbscan.back.service.L1BlockService;
 import com.tcp.zkbscan.back.service.L2BlockService;
+import com.tcp.zkbscan.back.service.L2TransactionService;
 import com.tcp.zkbscan.back.service.StatisticsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,6 +23,7 @@ public class StatisticsController {
     private final StatisticsService statisticsService;
     private final L1BlockService l1BlockService;
     private final L2BlockService l2BlockService;
+    private final L2TransactionService l2TransactionService;
 
     @Operation(summary = "기본 통계 정보 조회", description = "zkBNB 관련 기본적인 통계 정보를 조회합니다.")
     @GetMapping("/statistics")
@@ -31,6 +33,7 @@ public class StatisticsController {
         basicStatistics.setLatestL1BlockNumber(l1BlockService.getLatestBlock().getNumber());
         basicStatistics.setLatestl2BlockNumber(l2BlockService.getLatestBlock().getHeight());
         basicStatistics.setTvl(statisticsService.getTvl().getValue());
+        basicStatistics.setTotalTransactionCount(l2TransactionService.getTotalTransactionCount());
         return basicStatistics;
     }
 
