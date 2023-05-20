@@ -30,30 +30,30 @@ public class WithdrawalService {
     private String l1ContractAddress;
 
     public List<DepositTransactionDTO> getWithdrawals() {
+        /*
         List<L1TransactionDTO> l1Withdrawals = getWithdrawalsOnL1().stream()
-                .filter(i -> i.getInput().startsWith("0xf9ea2e71") /* verifyAndExecuteBlocks */)
+                .filter(i -> i.getInput().startsWith("0xf9ea2e71") // verifyAndExecuteBlocks
                 .sorted(Comparator.comparing(L1TransactionDTO::getBlockNumber).reversed())
                 .toList();
+        */
 
         List<L2TransactionDTO> l2Withdrawals = getWithdrawalsOnL2().stream()
                 .sorted(Comparator.comparing(L2TransactionDTO::getBlockHeight).reversed())
                 .toList();
 
-        log.info("{} {}", l1Withdrawals.size(), l2Withdrawals.size());
-
         List<DepositTransactionDTO> result = new ArrayList<>();
-        for(int i = 0; i < l1Withdrawals.size(); i++) {
-            L1TransactionDTO l1TransactionDTO = l1Withdrawals.get(i);
+        for(int i = 0; i < l2Withdrawals.size(); i++) {
+            //L1TransactionDTO l1TransactionDTO = l1Withdrawals.get(i);
             L2TransactionDTO l2TransactionDTO = l2Withdrawals.get(i);
 
             DepositTransactionDTO depositTransaction = new DepositTransactionDTO();
-            depositTransaction.setL1BlockNumber(l1TransactionDTO.getBlockNumber());
-            depositTransaction.setL1Txid(l1TransactionDTO.getHash());
+            //depositTransaction.setL1BlockNumber(l1TransactionDTO.getBlockNumber());
+            //depositTransaction.setL1Txid(l1TransactionDTO.getHash());
             depositTransaction.setL2BlockHeight(l2TransactionDTO.getBlockHeight());
             depositTransaction.setL2Txid(l2TransactionDTO.getHash());
-            depositTransaction.setL1Address(l1TransactionDTO.getFrom());
+            //depositTransaction.setL1Address(l1TransactionDTO.getFrom());
             depositTransaction.setL2Address(l2TransactionDTO.getToL1Address());
-            depositTransaction.setL1Timestamp(l1BlockService.getBlockByNumber(l1TransactionDTO.getBlockNumber()).getTimestamp());
+            //depositTransaction.setL1Timestamp(l1BlockService.getBlockByNumber(l1TransactionDTO.getBlockNumber()).getTimestamp());
             depositTransaction.setL2CreatedAt(l2TransactionDTO.getCreatedAt());
             depositTransaction.setL2VerifyAt(l2TransactionDTO.getVerifyAt());
 
