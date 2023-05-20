@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
+import * as reqFunc from "../api/placeSuggestion";
 
 interface NavListItem {
   name: string;
@@ -17,6 +18,9 @@ interface ArticlState {
   page: number;
   setPage: (page: number) => void;
   //   setpageData: (data: [{ [key: string]: string }]) => void;
+}
+interface AppActions {
+  search: (input: string) => void;
 }
 
 export const useNavStore = create<AppState>()(
@@ -67,7 +71,10 @@ export const useArticleState = create<ArticlState>()(
           },
         ],
         setPage: () => set((state) => ({ page: state.page })),
-        // setpageData: () => set((state) => ({ data: state.data })),
+        setpageData: () => {
+          let latestBlock = reqFunc.FetchL1Block;
+          set((state) => ({ data: state.data }));
+        },
       }),
       {
         name: "articlState",
@@ -75,14 +82,29 @@ export const useArticleState = create<ArticlState>()(
     )
   )
 );
-export const useSearchValue = create<SearchValue>()(
+export const useSearchValue = create<SearchValue & AppActions>()(
   devtools(
     persist(
       (set) => ({
         searchValue: "abc",
         setSearchValue: (searchValue: string) =>
           set((state) => ({ ...state, searchValue: searchValue })),
+        search: (input) => {
+          if (/^0x[a-fA-F0-9]{40}$/.test(input)) {
+            // Input matches wallet regex
+            return reqFunc.FetchL2TransactionTxid;
+          } else if (/^([A-Fa-f0-9]{64})$/.test(input)) {
+            // Input matches txid regex
+            return reqFunc.FetchL2TransactionTxid;
+          } else if (/^\d+$/.test(input)) {
+            // Input is a number
+          } else {
+            // Invalid input
+            console.log("Invalid input");
+          }
+        },
       }),
+
       {
         name: "searchValue",
       }
