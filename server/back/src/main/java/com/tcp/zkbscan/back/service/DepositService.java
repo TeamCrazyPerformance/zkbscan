@@ -71,7 +71,7 @@ public class DepositService {
     }
 
     private List<L1TransactionDTO> getDepositsOnL1() {
-        List<L1Transaction> l1Transactions = l1TransactionService.getTransactionByToAndType(l1ContractAddress, "0x0");
+        List<L1Transaction> l1Transactions = l1TransactionService.getTransactionByToAndStatus(l1ContractAddress, "0x1");
 
         return l1Transactions.stream().map(L1TransactionDTO::new).collect(Collectors.toList());
     }

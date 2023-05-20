@@ -10,6 +10,7 @@ import java.math.BigInteger;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @ToString
 public class L1Transaction {
 
@@ -42,6 +43,8 @@ public class L1Transaction {
     private BigInteger value;
 
     private String type;
+
+    private String status;
 
     private Long v;
 

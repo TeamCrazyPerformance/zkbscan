@@ -25,9 +25,12 @@ public class L1TransactionService {
         l1TransactionRepository.save(l1Transaction);
     }
 
-    public List<L1Transaction> getTransactionByToAndType(String to, String type) {
-        Specification<L1Transaction> spec = Specification.where(L1TransactionSpecification.equalType(type));
-        spec = spec.and(L1TransactionSpecification.equalTo(to));
+    public List<L1Transaction> getTransactionByToAndStatus(String to, String status) {
+        Specification<L1Transaction> spec = Specification.where(L1TransactionSpecification.equalTo(to));
+        if(status == null)
+            spec = spec.and(L1TransactionSpecification.isNullStatus());
+        else
+            spec = spec.and(L1TransactionSpecification.equalStatus(status));
 
         return l1TransactionRepository.findAll(spec);
     }

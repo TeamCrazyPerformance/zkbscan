@@ -23,9 +23,12 @@ import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.EthBlock;
+import org.web3j.protocol.core.methods.response.TransactionReceipt;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Component
@@ -223,6 +226,27 @@ public class Scheduler {
                 }
 
                 targetBlockNumber = targetBlockNumber.add(BigInteger.ONE);
+            }
+        }
+    }
+
+    @Scheduled(fixedDelay = 1000)
+    public void fetchL1TxReceipt() {
+        List<L1Transaction> l1Transactions = l1TransactionService.getTransactionByToAndStatus(l1ContractAddress, null);
+
+        for(L1Transaction tx : l1Transactions) {
+            try {
+                Optional<TransactionReceipt> optional = bscL1Rpc.ethGetTransactionReceipt(tx.getHash())
+                        .send()
+                        .getTransactionReceipt();
+                if(optional.isPresent()) {
+                    TransactionReceipt receipt = optional.get();
+                    tx.setStatus(receipt.getStatus());
+                    l1TransactionService.saveTransaction(tx);
+                    log.info("[L1] Get transaction receipt : {}", tx.getHash());
+                }
+            } catch (Exception e) {
+                log.warn("[L1] Failed get transaction receipt : {}", tx.getHash());
             }
         }
     }

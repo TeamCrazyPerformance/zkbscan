@@ -5,8 +5,12 @@ import org.springframework.data.jpa.domain.Specification;
 
 public class L1TransactionSpecification {
 
-    public static Specification<L1Transaction> equalType(String type) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("type"), type);
+    public static Specification<L1Transaction> equalStatus(String status) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("status"), status);
+    }
+
+    public static Specification<L1Transaction> isNullStatus() {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.isNull(root.get("status"));
     }
 
     public static Specification<L1Transaction> equalTo(String to) {
