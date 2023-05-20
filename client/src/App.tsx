@@ -1,9 +1,18 @@
+<<<<<<< HEAD
 import Cit from "./template/pages/contrInTrans";
 import Dtc from "./template/pages/datilyTransChart";
 import E1T from "./template/pages/E11Transfer";
 import E1TT from "./template/pages/e11TopToken";
 import E21TT from "./template/pages/e21tt";
 import E2T from "./template/pages/e2Transfer";
+=======
+import Cit from "./template/pages/cit";
+import Dtc from "./template/pages/dtc";
+import E1T from "./template/pages/e1t";
+import E1TT from "./template/pages/e1tt";
+import E21TT from "./template/pages/e2tt";
+import E2T from "./template/pages/e2t";
+>>>>>>> bd58378be433bfc298b689144eca238fcb52119e
 import E7T from "./template/pages/e7t";
 import E7TT from "./template/pages/e7TopToken";
 import Home from "./template/pages/home";
@@ -30,7 +39,7 @@ function App() {
     { name: "L2 Transactions", key: "l2t", element: <L2T /> },
     { name: "L2 Transactions batches", key: "l2tb", element: <L2TB /> },
     { name: "View L2 state batches", key: "vl2sb", element: <VL2SB /> },
-    { name: "ERC 20 top tokens", key: "e21tt", element: <E21TT /> },
+    { name: "ERC 20 top tokens", key: "e2tt", element: <E21TT /> },
     { name: "ERC 20 transfer", key: "e2t", element: <E2T /> },
     { name: "ERC 721 top tokens", key: "e7tt", element: <E7TT /> },
     { name: "ERC 721 transfer", key: "e7t", element: <E7T /> },

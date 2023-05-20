@@ -44,7 +44,7 @@ function L2Trans() {
   useEffect(() => {
     const api = async () => {
       const data = await fetch(
-        "http://172.16.41.132:8080/tx/l2?page=23&size=25",
+        "http://49.247.30.69:8080/tx/l2?page=23&size=25",
         {
           method: "GET",
         }
@@ -59,7 +59,7 @@ function L2Trans() {
     <div>
       <div>
         {result?.data.map((item) => (
-          <div key={item.hash}>{item.status}</div>
+          <div key={item.hash}>{item.accountIndex}</div>
         ))}
       </div>
     </div>
