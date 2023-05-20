@@ -1,5 +1,5 @@
-import BasicPage from "../basic/basicPage/basicPage";
-import TransBasic from "../basic/transBasic/transBasic";
+import BasicPage from "../basic/basicPage";
+import TransBasic from "../basic/transBasic";
 interface MyComponentProps {
   data: {
     [key: string]: string;
@@ -7,15 +7,16 @@ interface MyComponentProps {
 }
 
 function Trans() {
-  return (
-    <div>
-      <BasicPage>
-        {data.map((data) => {
-          <TransBasic data={data} />;
-        })}
-      </BasicPage>
-    </div>
-  );
+  //return (
+  //<div>
+  //  <BasicPage>
+  //    {data.map((data) => {
+  //      <TransBasic data={data} />;
+  //    })}
+  //  </BasicPage>
+  //</div>;
+  //);
+  return <></>;
 }
 
 export default Trans;
