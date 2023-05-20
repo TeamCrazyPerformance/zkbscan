@@ -1,12 +1,15 @@
 package com.tcp.zkbscan.back.controller;
 
 import com.tcp.zkbscan.back.dto.statistics.BasicStatistics;
+import com.tcp.zkbscan.back.dto.statistics.TransactionChart;
 import com.tcp.zkbscan.back.service.StatisticsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @Tag(name = "Statistics", description = "통계")
 @RestController
@@ -21,5 +24,11 @@ public class StatisticsController {
         BasicStatistics basicStatistics = new BasicStatistics();
         basicStatistics.setBnbPrice(statisticsService.getBNBPrice());
         return basicStatistics;
+    }
+
+    @Operation(summary = "트랜젝션 차트 조회", description = "zkBNB에서 일간 발생한 트랜젝션 수를 조회합니다.")
+    @GetMapping("/statistics/chart")
+    public List<TransactionChart> getTransactionChart() {
+        return statisticsService.getTransactionChart();
     }
 }

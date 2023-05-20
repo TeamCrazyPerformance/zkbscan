@@ -43,4 +43,8 @@ public class L2TransactionService {
         return l2TransactionRepository.findAllByOrderByCreatedAtDesc(pageRequest);
     }
 
+    public List<L2Transaction> getAllTransaction() {
+        return l2TransactionRepository.findAll();
+    }
+
 }
