@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-import * as reqFunc from "../api/placeSuggestion";
+import * as resultData from "../api/placeSuggestion";
 
 interface NavListItem {
   name: string;
@@ -14,10 +14,12 @@ interface SearchValue {
   setSearchValue: (searchValue: string) => void;
 }
 interface ArticlState {
-  data: [{ [key: string]: string }];
-  page: number;
-  setPage: (page: number) => void;
-  //   setpageData: (data: [{ [key: string]: string }]) => void;
+  //   data: [{ [key: string]: string }];
+  currentPage: number;
+  totalPages: number;
+  pageSize: number;
+  data: any[];
+  nextBlockPage: () => Promise<any[]>;
 }
 interface AppActions {
   search: (input: string) => void;
@@ -57,7 +59,9 @@ export const useArticleState = create<ArticlState>()(
   devtools(
     persist(
       (set) => ({
-        page: 0,
+        currentPage: 0,
+        totalPages: 0,
+        pageSize: 25,
         data: [
           {
             hash: "1",
@@ -70,10 +74,68 @@ export const useArticleState = create<ArticlState>()(
             txnfee: "1",
           },
         ],
-        setPage: () => set((state) => ({ page: state.page })),
-        setpageData: () => {
-          let latestBlock = reqFunc.FetchL1Block;
-          set((state) => ({ data: state.data }));
+        nextBlockPage: async () => {
+          try {
+            const { currentPage, pageSize } = useArticleState.getState();
+            const data = await resultData.FetchL2Block(
+              currentPage + 1,
+              pageSize
+            );
+            return data;
+          } catch (error) {
+            console.error("An error occurred while fetching data:", error);
+            return [];
+          }
+        },
+        prevBlockPage: async () => {
+          try {
+            const { currentPage, pageSize } = useArticleState.getState();
+            const data = await resultData.FetchL2Block(
+              currentPage - 1,
+              pageSize
+            );
+            return data;
+          } catch (error) {
+            console.error("An error occurred while fetching data:", error);
+            return [];
+          }
+        },
+        setPage: (page: number) => set({ currentPage: page }),
+
+        // goToPage: (pageIndex: number) => {
+        //   set({ currentPage: pageIndex });
+        // },
+        // goToNextPage: () => {
+        //   set(async (state) => {
+        //     const nextPageIndex = state.currentPage + 1;
+        //     const result = await data.FetchL2Block(
+        //       nextPageIndex,
+        //       state.pageSize
+        //     );
+        //     return {
+        //       ...state,
+        //       data: result.data,
+        //       currentPage: nextPageIndex,
+        //       totalPages: result.data.totalPages,
+        //     };
+        //   });
+        // },
+        // PrevPage: () => {
+        //   set((state) => {
+        //     const previousPageIndex = state.currentPage - 1;
+        //     return { currentPage: previousPageIndex };
+        //   });
+        // },
+        goToNewestPage: () => {
+          set((state) => {
+            return { currentPage: state.totalPages - 1 };
+          });
+        },
+        goToOldestPage: () => {
+          set({ currentPage: 0 });
+        },
+        setTotalPages: (totalPages: number) => {
+          set({ totalPages });
         },
       }),
       {
@@ -92,10 +154,10 @@ export const useSearchValue = create<SearchValue & AppActions>()(
         search: (input) => {
           if (/^0x[a-fA-F0-9]{40}$/.test(input)) {
             // Input matches wallet regex
-            return reqFunc.FetchL2TransactionTxid;
+            return resultData.FetchL2TransactionTxid;
           } else if (/^([A-Fa-f0-9]{64})$/.test(input)) {
             // Input matches txid regex
-            return reqFunc.FetchL2TransactionTxid;
+            return resultData.FetchL2TransactionTxid;
           } else if (/^\d+$/.test(input)) {
             // Input is a number
           } else {
