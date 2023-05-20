@@ -9,7 +9,7 @@ interface AppState {
   navList: NavListItem[];
 }
 
-const useBearStore = create<AppState>()(
+export const useNavStore = create<AppState>()(
   devtools(
     persist(
       (set) => ({
