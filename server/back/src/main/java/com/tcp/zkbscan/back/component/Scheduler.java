@@ -42,6 +42,9 @@ public class Scheduler {
     @Value("${bsc.l1.contract.block}")
     private BigInteger contractDeployedBlockNumber;
 
+    @Value("${bsc.l1.contract.address}")
+    private String l1ContractAddress;
+
     @Value("${bsc.l2.rpc.url}")
     private String bscL2RpcUrl;
 
@@ -101,6 +104,9 @@ public class Scheduler {
                     // Transaction
                     for (EthBlock.TransactionResult txr : newBlock.getTransactions()) {
                         EthBlock.TransactionObject tx = (EthBlock.TransactionObject) txr.get();
+
+                        if(!l1ContractAddress.equals(tx.getTo()))
+                            continue;
 
                         L1Transaction l1Transaction = L1Transaction.builder()
                                 .blockHash(tx.getBlockHash())
