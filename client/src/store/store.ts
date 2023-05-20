@@ -10,10 +10,10 @@ interface AppState {
 }
 interface SearchValue {
   searchValue: string;
+  setSearchValue: (searchValue: string) => string;
 }
 interface ArticlState {
   searchValue: string;
-  setSearchValue: (searchValue: string) => string;
 }
 
 export const useNavStore = create<AppState>()(
@@ -46,18 +46,18 @@ export const useNavStore = create<AppState>()(
     )
   )
 );
-export const useArticleState = create<ArticlState>()(
-  devtools(
-    persist(
-      (set) => ({
-        increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
-      }),
-      {
-        name: "navList",
-      }
-    )
-  )
-);
+// export const useArticleState = create<ArticlState>()(
+//   devtools(
+//     persist(
+//       (set) => ({
+//         increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
+//       }),
+//       {
+//         name: "navList",
+//       }
+//     )
+//   )
+// );
 export const useSearchValue = create<SearchValue>()(
   devtools(
     persist(
