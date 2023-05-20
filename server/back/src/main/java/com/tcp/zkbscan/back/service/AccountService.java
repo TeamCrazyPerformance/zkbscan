@@ -3,7 +3,6 @@ package com.tcp.zkbscan.back.service;
 import com.tcp.zkbscan.back.dto.account.AccountAssetDTO;
 import com.tcp.zkbscan.back.dto.account.AccountDTO;
 import com.tcp.zkbscan.back.dto.account.AccountTransactionChart;
-import com.tcp.zkbscan.back.dto.statistics.TransactionChart;
 import com.tcp.zkbscan.back.dto.zkbnb.AccountResponse;
 import com.tcp.zkbscan.back.entity.L2Transaction;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,6 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -58,7 +56,7 @@ public class AccountService {
                 ));
 
         List<AccountTransactionChart> result = new ArrayList<>();
-        for(LocalDate d : transactionGroup.keySet()) {
+        for (LocalDate d : transactionGroup.keySet()) {
             AccountTransactionChart chart = new AccountTransactionChart();
             chart.setDate(d);
             chart.setTransactionCount(transactionGroup.get(d).size());

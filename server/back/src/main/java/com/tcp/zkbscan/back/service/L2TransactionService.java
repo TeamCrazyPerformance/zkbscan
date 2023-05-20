@@ -31,7 +31,7 @@ public class L2TransactionService {
     public List<L2Transaction> getTransactionByTypes(List<BigInteger> types) {
         Specification<L2Transaction> spec = Specification.where(L2TransactionSpecification.equalType(types.get(0)));
 
-        for(int i = 1; i < types.size(); i++) {
+        for (int i = 1; i < types.size(); i++) {
             spec = spec.or(L2TransactionSpecification.equalType(types.get(i)));
         }
 

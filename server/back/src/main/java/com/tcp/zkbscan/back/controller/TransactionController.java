@@ -54,7 +54,7 @@ public class TransactionController {
     @Operation(summary = "L2 트랜젝션 조회", description = "L2 트랜젝션들을 조회합니다.")
     @GetMapping("/tx/l2")
     public PageDTO<List<L2TransactionDTO>> getL2BlockByNumber(@Positive @RequestParam int page,
-                                               @Positive @RequestParam int size) {
+                                                              @Positive @RequestParam int size) {
         Page<L2Transaction> l2TransactionPage = l2TransactionService.getTransaction(page - 1, size);
         PageInfoDTO pageInfoDTO = new PageInfoDTO(page, size, (int) l2TransactionPage.getTotalElements(), l2TransactionPage.getTotalPages());
 
@@ -67,12 +67,12 @@ public class TransactionController {
     @Operation(summary = "Deposit 트랜젝션 조회", description = "L1에서 L2로 Deposit된 트랜젝션 데이터를 조회합니다.")
     @GetMapping("/tx/deposit")
     public PageDTO<List<DepositTransactionDTO>> getDepositTransaction(@Positive @RequestParam int page,
-                                                             @Positive @RequestParam int size) {
+                                                                      @Positive @RequestParam int size) {
         List<DepositTransactionDTO> deposits = depositService.getDeposits();
 
         final int start = (page - 1) * size;
         final int end = Math.min((start + size), deposits.size());
-        PageInfoDTO pageInfoDTO = new PageInfoDTO(page, size, deposits.size(), (int) Math.ceil((double)deposits.size() / size));
+        PageInfoDTO pageInfoDTO = new PageInfoDTO(page, size, deposits.size(), (int) Math.ceil((double) deposits.size() / size));
 
         return new PageDTO<>(deposits.subList(start, end), pageInfoDTO);
     }
@@ -80,12 +80,12 @@ public class TransactionController {
     @Operation(summary = "Withdrawal 트랜젝션 조회", description = "L2에서 L1로 Withdrawal된 트랜젝션 데이터를 조회합니다.")
     @GetMapping("/tx/withdrawal")
     public PageDTO<List<DepositTransactionDTO>> getWithdrawalTransaction(@Positive @RequestParam int page,
-                                                                @Positive @RequestParam int size) {
+                                                                         @Positive @RequestParam int size) {
         List<DepositTransactionDTO> withdrawals = withdrawalService.getWithdrawals();
 
         final int start = (page - 1) * size;
         final int end = Math.min((start + size), withdrawals.size());
-        PageInfoDTO pageInfoDTO = new PageInfoDTO(page, size, withdrawals.size(), (int) Math.ceil((double)withdrawals.size() / size));
+        PageInfoDTO pageInfoDTO = new PageInfoDTO(page, size, withdrawals.size(), (int) Math.ceil((double) withdrawals.size() / size));
 
         return new PageDTO<>(withdrawals.subList(start, end), pageInfoDTO);
     }

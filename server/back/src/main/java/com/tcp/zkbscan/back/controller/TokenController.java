@@ -2,7 +2,6 @@ package com.tcp.zkbscan.back.controller;
 
 import com.tcp.zkbscan.back.dto.PageDTO;
 import com.tcp.zkbscan.back.dto.PageInfoDTO;
-import com.tcp.zkbscan.back.dto.block.L2BlockDTO;
 import com.tcp.zkbscan.back.dto.token.TokenTransferDTO;
 import com.tcp.zkbscan.back.entity.L2Transaction;
 import com.tcp.zkbscan.back.service.L2TransactionService;
@@ -45,13 +44,13 @@ public class TokenController {
     }
 
     private String convertType(BigInteger type) {
-        if(type.equals(BigInteger.valueOf(2))) {
+        if (type.equals(BigInteger.valueOf(2))) {
             return "Deposit";
-        } else if(type.equals(BigInteger.valueOf(4))) {
+        } else if (type.equals(BigInteger.valueOf(4))) {
             return "Transfer";
-        } else if(type.equals(BigInteger.valueOf(5))) {
+        } else if (type.equals(BigInteger.valueOf(5))) {
             return "Withdraw";
-        } else if(type.equals(BigInteger.valueOf(9))) {
+        } else if (type.equals(BigInteger.valueOf(9))) {
             return "Atomic Match";
         }
         return "";

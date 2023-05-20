@@ -42,7 +42,7 @@ public class WithdrawalService {
                 .toList();
 
         List<DepositTransactionDTO> result = new ArrayList<>();
-        for(int i = 0; i < l2Withdrawals.size(); i++) {
+        for (int i = 0; i < l2Withdrawals.size(); i++) {
             //L1TransactionDTO l1TransactionDTO = l1Withdrawals.get(i);
             L2TransactionDTO l2TransactionDTO = l2Withdrawals.get(i);
 

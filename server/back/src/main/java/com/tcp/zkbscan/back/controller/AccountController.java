@@ -45,7 +45,7 @@ public class AccountController {
 
         final int start = (page - 1) * size;
         final int end = Math.min((start + size), transactions.size());
-        PageInfoDTO pageInfoDTO = new PageInfoDTO(page, size, transactions.size(), (int) Math.ceil((double)transactions.size() / size));
+        PageInfoDTO pageInfoDTO = new PageInfoDTO(page, size, transactions.size(), (int) Math.ceil((double) transactions.size() / size));
 
         return new PageDTO<>(transactions.subList(start, end).stream().map(L2TransactionDTO::new).collect(Collectors.toList()), pageInfoDTO);
     }

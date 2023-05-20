@@ -41,7 +41,7 @@ public class DepositService {
                 .toList();
 
         List<DepositTransactionDTO> result = new ArrayList<>();
-        for(int i = 0; i < l1Deposits.size(); i++) {
+        for (int i = 0; i < l1Deposits.size(); i++) {
             L1TransactionDTO l1TransactionDTO = l1Deposits.get(i);
             L2TransactionDTO l2TransactionDTO = l2Deposits.get(i);
 

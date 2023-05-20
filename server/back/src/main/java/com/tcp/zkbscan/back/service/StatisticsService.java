@@ -62,14 +62,14 @@ public class StatisticsService {
                 ));
 
         Map<LocalDate, BigDecimal> price = new HashMap<>();
-        for(List<Object> l : getBNBPriceChart()) {
-            price.put(Instant.ofEpochMilli((long)l.get(0))
+        for (List<Object> l : getBNBPriceChart()) {
+            price.put(Instant.ofEpochMilli((long) l.get(0))
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate(), new BigDecimal((String) l.get(4)));
         }
 
         List<TransactionChart> result = new ArrayList<>();
-        for(LocalDate d : transactionGroup.keySet()) {
+        for (LocalDate d : transactionGroup.keySet()) {
             TransactionChart chart = new TransactionChart();
             chart.setDate(d);
             chart.setTransactionCount(transactionGroup.get(d).size());
@@ -89,8 +89,8 @@ public class StatisticsService {
         List<L2Transaction> depositTokenTxs = l2TransactionService.getTransactionContainAssetByType(BigInteger.valueOf(2));
         List<L2Transaction> withdrawalTokenTxs = l2TransactionService.getTransactionContainAssetByType(BigInteger.valueOf(5));
 
-        for(L2Transaction depositTokenTx : depositTokenTxs) {
-            if(!tvl.containsKey(depositTokenTx.getAssetName()))
+        for (L2Transaction depositTokenTx : depositTokenTxs) {
+            if (!tvl.containsKey(depositTokenTx.getAssetName()))
                 tvl.put(depositTokenTx.getAssetName(), new BigDecimal(new BigInteger(depositTokenTx.getAmount()), 18));
             else {
                 BigDecimal sum = tvl.get(depositTokenTx.getAssetName());
@@ -98,7 +98,7 @@ public class StatisticsService {
             }
         }
 
-        for(L2Transaction withdrawalTokenTx : withdrawalTokenTxs) {
+        for (L2Transaction withdrawalTokenTx : withdrawalTokenTxs) {
             BigDecimal sum = tvl.get(withdrawalTokenTx.getAssetName());
             tvl.put(withdrawalTokenTx.getAssetName(), sum.subtract(new BigDecimal(new BigInteger(withdrawalTokenTx.getAmount()), 18)));
         }
@@ -112,7 +112,7 @@ public class StatisticsService {
                 Collectors.toMap(BinanceTicker::getSymbol, BinanceTicker::getPrice));
 
         BigDecimal totalSum = BigDecimal.ZERO;
-        for(String symbol : tvl.keySet()) {
+        for (String symbol : tvl.keySet()) {
             TVL t = new TVL();
             t.setSymbol(symbol);
             t.setAmount(tvl.get(symbol));

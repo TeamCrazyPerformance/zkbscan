@@ -27,7 +27,7 @@ public class L1TransactionService {
 
     public List<L1Transaction> getTransactionByToAndStatus(String to, String status) {
         Specification<L1Transaction> spec = Specification.where(L1TransactionSpecification.equalTo(to));
-        if(status == null)
+        if (status == null)
             spec = spec.and(L1TransactionSpecification.isNullStatus());
         else
             spec = spec.and(L1TransactionSpecification.equalStatus(status));

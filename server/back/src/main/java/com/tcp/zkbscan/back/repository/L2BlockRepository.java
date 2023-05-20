@@ -12,6 +12,8 @@ import java.math.BigInteger;
 public interface L2BlockRepository extends JpaRepository<L2Block, BigInteger> {
 
     L2Block findFirstByOrderByHeightDesc();
+
     L2Block findFirstByStatusOrderByHeightDesc(BigInteger status);
+
     Page<L2Block> findAllByOrderByHeightDesc(Pageable pageable);
 }

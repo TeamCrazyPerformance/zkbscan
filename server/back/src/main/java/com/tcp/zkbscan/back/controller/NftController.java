@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tcp.zkbscan.back.dto.PageDTO;
 import com.tcp.zkbscan.back.dto.PageInfoDTO;
 import com.tcp.zkbscan.back.dto.nft.NftTransferDTO;
-import com.tcp.zkbscan.back.dto.token.TokenTransferDTO;
 import com.tcp.zkbscan.back.entity.L2Transaction;
 import com.tcp.zkbscan.back.service.L2TransactionService;
 import jakarta.validation.constraints.Positive;
@@ -14,10 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -38,7 +35,7 @@ public class NftController {
 
         final int start = (page - 1) * size;
         final int end = Math.min((start + size), transactions.size());
-        PageInfoDTO pageInfoDTO = new PageInfoDTO(page, size, transactions.size(), (int) Math.ceil((double)transactions.size() / size));
+        PageInfoDTO pageInfoDTO = new PageInfoDTO(page, size, transactions.size(), (int) Math.ceil((double) transactions.size() / size));
 
         return new PageDTO<>(transactions.subList(start, end).stream().map(i -> NftTransferDTO.builder()
                 .txid(i.getHash())
@@ -51,11 +48,11 @@ public class NftController {
     }
 
     private String convertType(BigInteger type) {
-        if(type.equals(BigInteger.valueOf(3))) {
+        if (type.equals(BigInteger.valueOf(3))) {
             return "Deposit Nft";
-        } else if(type.equals(BigInteger.valueOf(8))) {
+        } else if (type.equals(BigInteger.valueOf(8))) {
             return "Transfer Nft";
-        } else if(type.equals(BigInteger.valueOf(11))) {
+        } else if (type.equals(BigInteger.valueOf(11))) {
             return "Withdraw Nft";
         }
         return "";
