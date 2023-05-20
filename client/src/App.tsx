@@ -1,19 +1,10 @@
-<<<<<<< HEAD
 import Cit from "./template/pages/contrInTrans";
 import Dtc from "./template/pages/datilyTransChart";
 import E1T from "./template/pages/E11Transfer";
 import E1TT from "./template/pages/e11TopToken";
-import E21TT from "./template/pages/e21tt";
+import E21TT from "./template/pages/e21TopTokens";
 import E2T from "./template/pages/e2Transfer";
-=======
-import Cit from "./template/pages/cit";
-import Dtc from "./template/pages/dtc";
-import E1T from "./template/pages/e1t";
-import E1TT from "./template/pages/e1tt";
-import E21TT from "./template/pages/e2tt";
-import E2T from "./template/pages/e2t";
->>>>>>> bd58378be433bfc298b689144eca238fcb52119e
-import E7T from "./template/pages/e7t";
+import E7T from "./template/pages/e7Transfer";
 import E7TT from "./template/pages/e7TopToken";
 import Home from "./template/pages/home";
 import L1L2Trans from "./template/pages/l1L2Trans";
@@ -28,14 +19,26 @@ import Navbar from "./template/sidebar/nav";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
-  let data={mu:'mu'}
+  let data = { mu: "mu" };
   const itemList = [
     { name: "home", key: "/", element: <Home /> },
     { name: "Transactions", key: "trans", element: <Trans /> },
     { name: "L1 -> L2 Transactions", key: "l1l2trans", element: <L1L2Trans /> },
-    { name: "L2 -> L1 Transactions", key: "l2l1trans", element: <L2L1Trans data={data}/> },
-    { name: "Contract internal transactions", key: "cit", element: <Cit data={data}/> },
-    { name: "L1 Transactions batches", key: "l1tb", element: <L1TB data={data}/> },
+    {
+      name: "L2 -> L1 Transactions",
+      key: "l2l1trans",
+      element: <L2L1Trans data={data} />,
+    },
+    {
+      name: "Contract internal transactions",
+      key: "cit",
+      element: <Cit data={data} />,
+    },
+    {
+      name: "L1 Transactions batches",
+      key: "l1tb",
+      element: <L1TB data={data} />,
+    },
     { name: "View L1 state batches", key: "vl1sb", element: <VL1SB /> },
     { name: "L2 Transactions", key: "l2t", element: <L2T /> },
     { name: "L2 Transactions batches", key: "l2tb", element: <L2TB /> },
