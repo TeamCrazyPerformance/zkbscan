@@ -54,6 +54,11 @@ public class L2TransactionService {
         return l2TransactionRepository.findAll(spec);
     }
 
+    public Page<L2Transaction> getTransactionContainAsset(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return l2TransactionRepository.findAllByAssetIdIsNotOrderByCreatedAtDesc(BigInteger.valueOf(-1), pageRequest);
+    }
+
     public List<L2Transaction> getTransactionByAddress(String address) {
         Specification<L2Transaction> spec = Specification.where(L2TransactionSpecification.equalL1Address(address));
         spec = spec.or(L2TransactionSpecification.equalToL1Address(address));
