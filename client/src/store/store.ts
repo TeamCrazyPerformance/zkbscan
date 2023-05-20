@@ -13,7 +13,10 @@ interface SearchValue {
   setSearchValue: (searchValue: string) => void;
 }
 interface ArticlState {
-  searchValue: string;
+  data: [{ [key: string]: string }];
+  page: number;
+  setPage: (page: number) => void;
+  //   setpageData: (data: [{ [key: string]: string }]) => void;
 }
 
 export const useNavStore = create<AppState>()(
@@ -46,18 +49,32 @@ export const useNavStore = create<AppState>()(
     )
   )
 );
-// export const useArticleState = create<ArticlState>()(
-//   devtools(
-//     persist(
-//       (set) => ({
-//         increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
-//       }),
-//       {
-//         name: "navList",
-//       }
-//     )
-//   )
-// );
+export const useArticleState = create<ArticlState>()(
+  devtools(
+    persist(
+      (set) => ({
+        page: 0,
+        data: [
+          {
+            hash: "1",
+            block: "1",
+            age: "1",
+            from: "1",
+            to: "1",
+            confirmBy: "1",
+            value: "1",
+            txnfee: "1",
+          },
+        ],
+        setPage: () => set((state) => ({ page: state.page })),
+        // setpageData: () => set((state) => ({ data: state.data })),
+      }),
+      {
+        name: "articlState",
+      }
+    )
+  )
+);
 export const useSearchValue = create<SearchValue>()(
   devtools(
     persist(
