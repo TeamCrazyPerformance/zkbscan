@@ -1,5 +1,3 @@
-import BasicPage from "../basic/basicPage";
-import TransBasic from "../basic/transBasic";
 interface MyComponentProps {
   data: {
     [key: string]: string;

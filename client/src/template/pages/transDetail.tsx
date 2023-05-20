@@ -16,13 +16,7 @@ const TransDetail = ({ data }: MyComponentProps) => {
           <div>
             <Nav variant="tabs" defaultActiveKey="/overview">
               <Nav.Item>
-                <Nav.Link
-                  onClick={() => {
-                    탭변경(0);
-                  }}
-                >
-                  Overview
-                </Nav.Link>
+                <Nav.Link onClick={() => {}}>Overview</Nav.Link>
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link eventKey="log">Log</Nav.Link>
