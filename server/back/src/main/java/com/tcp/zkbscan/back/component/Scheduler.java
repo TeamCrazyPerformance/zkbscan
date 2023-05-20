@@ -67,7 +67,7 @@ public class Scheduler {
             startBlockNumber = startBlockNumber.max(l1DBLatestBlock.getNumber().add(BigInteger.ONE));
         BigInteger endBlockNumber = l1NodeLatestBlock.getNumber();
 
-        if (startBlockNumber.compareTo(endBlockNumber) < 0) {
+        if (startBlockNumber.compareTo(endBlockNumber) <= 0) {
             log.info("[L1] Block Replaying From : {}, To : {}", startBlockNumber, endBlockNumber);
 
             BigInteger targetBlockNumber = startBlockNumber;
@@ -140,7 +140,7 @@ public class Scheduler {
 
     @Scheduled(fixedDelay = 1000)
     public void fetchL2NewBlock() {
-        L2Block l2DBLatestBlock = l2BlockService.getLatestBlock();
+        L2Block l2DBLatestBlock = l2BlockService.getLatestBlockVerifiedAndExecuted();
 
         BigInteger startBlockHeight = BigInteger.ZERO;
         if (l2DBLatestBlock != null)
@@ -154,7 +154,7 @@ public class Scheduler {
 
         BigInteger endBlockHeight = currentHeightResponse.getBody().getHeight();
 
-        if (startBlockHeight.compareTo(endBlockHeight) < 0) {
+        if (startBlockHeight.compareTo(endBlockHeight) <= 0) {
             log.info("[L2] Block Replaying From : {}, To : {}", startBlockHeight, endBlockHeight);
 
             BigInteger targetBlockNumber = startBlockHeight;
