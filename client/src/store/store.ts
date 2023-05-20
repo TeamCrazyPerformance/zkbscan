@@ -18,7 +18,16 @@ interface ArticlState {
   totalPages: number;
   pageSize: number;
   data: any[];
-  nextBlockPage: () => Promise<any[]>;
+  setPage: (page: number) => void;
+  setPageSize: (pageSize: number) => void;
+  setTotalPage: (totalPages: number) => void;
+  showBlockPage: () => void;
+  nextBlockPage: () => void;
+  prevBlockPage: () => void;
+  showTransPage: () => void;
+  nextTransPage: () => void;
+  goToNewestPage: () => void;
+  goToOldestPage: () => void;
 }
 interface AppActions {
   search: (input: string) => void;
@@ -74,10 +83,8 @@ export const useArticleState = create<ArticlState>()(
           },
         ],
         setPage: (page: number) => set({ currentPage: page }),
-        setPageSize: (pagesize: number) => set({ pageSize: pagesize }),
-        setTotalPages: (totalPages: number) => {
-          set({ totalPages });
-        },
+        setPageSize: (pageSize: number) => set({ pageSize }),
+        setTotalPage: (totalPages: number) => set({ totalPages }),
         showBlockPage: async () => {
           try {
             const { currentPage, pageSize } = useArticleState.getState();
@@ -163,7 +170,7 @@ export const useArticleState = create<ArticlState>()(
         },
       }),
       {
-        name: "articlState",
+        name: "ArticlState",
       }
     )
   )
