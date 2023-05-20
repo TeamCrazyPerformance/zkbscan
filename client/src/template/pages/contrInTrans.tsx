@@ -3,9 +3,10 @@ interface MyComponentProps {
     [key: string]: string;
   };
 }
-const CitBasic = ({ data }: MyComponentProps) => {
+
+function Cit({ data }: MyComponentProps) {
   return (
-    <div>
+    <>
       <div className="wrapper">
         <div className="box">{data.block}</div>
         <div className="box">{data.age}</div>
@@ -15,8 +16,8 @@ const CitBasic = ({ data }: MyComponentProps) => {
         <div className="box">{data.to}</div>
         <div className="box">{data.value}</div>
       </div>
-    </div>
+    </>
   );
-};
+}
 
-export default CitBasic;
+export default Cit;

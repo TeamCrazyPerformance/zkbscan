@@ -38,7 +38,7 @@ type DataType = {
   };
 };
 
-function L2T() {
+function L2Trans() {
   const [result, setResult] = useState<DataType>();
 
   useEffect(() => {
@@ -66,4 +66,4 @@ function L2T() {
   );
 }
 
-export default L2T;
+export default L2Trans;

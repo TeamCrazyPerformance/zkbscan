@@ -1,11 +1,13 @@
 import Nav from "react-bootstrap/Nav";
+import { useState } from "react";
 
 interface MyComponentProps {
   data: {
     [key: string]: string;
   };
 }
-const transDetail = ({ data }: MyComponentProps) => {
+const TransDetail = ({ data }: MyComponentProps) => {
+  let [tab, setTab] = useState(0);
   return (
     <div>
       <div className="wrapper">
@@ -14,7 +16,13 @@ const transDetail = ({ data }: MyComponentProps) => {
           <div>
             <Nav variant="tabs" defaultActiveKey="/overview">
               <Nav.Item>
-                <Nav.Link href="/overview">Overview</Nav.Link>
+                <Nav.Link
+                  onClick={() => {
+                    탭변경(0);
+                  }}
+                >
+                  Overview
+                </Nav.Link>
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link eventKey="log">Log</Nav.Link>
@@ -27,4 +35,4 @@ const transDetail = ({ data }: MyComponentProps) => {
   );
 };
 
-export default transDetail;
+export default TransDetail;

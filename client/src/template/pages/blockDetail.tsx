@@ -16,9 +16,6 @@ const blockDetail = ({ data }: MyComponentProps) => {
               <Nav.Item>
                 <Nav.Link href="/overview">Overview</Nav.Link>
               </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="log">Log</Nav.Link>
-              </Nav.Item>
             </Nav>
           </div>
         </div>
